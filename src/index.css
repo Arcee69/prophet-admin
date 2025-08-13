@@ -1,1 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import "tailwindcss";
+
+@theme {
+  /* Custom Breakpoints */
+  --breakpoint-xs: 300px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lm: 1024px;
+  --breakpoint-lg: 1280px;
+  --breakpoint-xl: 1436px;
+
+  /* Custom Colors */
+  --color-white: #fff;
+  --color-black: #000;
+  --color-dark-_100: #111827;
+  --color-dark-_200: #4B5563;
+  --color-green-_100: #42D979;
+  --color-green-_200: #6C8173;
+  --color-grey-_100: #6B7280;
+  --color-red-_100: #AF202D;
+  
+
+  /* Custom Font Family */
+  --font-jost: "Jost";
+  --font-lato: "Lato";
+}
