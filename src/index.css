@@ -14,12 +14,21 @@
   /* Custom Colors */
   --color-white: #fff;
   --color-black: #000;
-  --color-dark-_100: #111827;
-  --color-dark-_200: #4B5563;
-  --color-green-_100: #42D979;
-  --color-green-_200: #6C8173;
-  --color-grey-_100: #6B7280;
-  --color-red-_100: #AF202D;
+
+  --color-DARK-100: #111827;
+  --color-DARK-200: #4B5563;
+  --color-DARK-300: #101828;
+
+  --color-GREEN-100: #42D979;
+  --color-GREEN-200: #6C8173;
+
+  --color-GREY-100: #6B7280;
+  --color-GREY-200: #667085;
+  --color-GREY-300: #344054;
+
+  --color-RED-100: #AF202D;
+
+  --color-BLUE-100: #BDDAFF;
   
 
   /* Custom Font Family */

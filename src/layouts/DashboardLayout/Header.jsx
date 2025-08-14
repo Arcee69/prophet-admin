@@ -22,7 +22,7 @@ const Header = ({ toggleSidebar }) => {
         <div className='flex items-center justify-between'>
             <div className='flex items-center gap-2'>
                 <GiHamburgerMenu className={`${location.pathname === "/report" ? "block" : "lg:hidden"} w-6 h-6 text-[#000]  cursor-pointer`} onClick={toggleSidebar} />
-                <img src={Note} alt='Note' className={`${location.pathname === "/report" ? "hidden" : "flex"} w-[28px] h-[28px]`}/>
+                {/* <img src={Note} alt='Note' className={`${location.pathname === "/report" ? "hidden" : "flex"} w-[28px] h-[28px]`}/> */}
                 <p className='font-euclid text-[#00000066] cursor-pointer text-sm' onClick={() => {}}>
                     {location.pathname === "/report" ? "Report" : "Dashboard"}
                 </p>
