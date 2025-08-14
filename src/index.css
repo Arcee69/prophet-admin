@@ -18,6 +18,7 @@
   --color-DARK-100: #111827;
   --color-DARK-200: #4B5563;
   --color-DARK-300: #101828;
+  --color-DARK-400: #292929;
 
   --color-GREEN-100: #42D979;
   --color-GREEN-200: #6C8173;
@@ -25,6 +26,10 @@
   --color-GREY-100: #6B7280;
   --color-GREY-200: #667085;
   --color-GREY-300: #344054;
+  --color-GREY-400: #292929;
+  --color-GREY-500: #667185;
+
+  --color-ORANGE-100: #F48A1F;
 
   --color-RED-100: #AF202D;
 

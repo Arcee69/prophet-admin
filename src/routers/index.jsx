@@ -9,6 +9,14 @@ import VerifyOtp from '../pages/Auth/VerifyOtp';
 import Dashboard from '../pages/Dashboard';
 import Notify from '../pages/Auth/Notify';
 import ResetPassword from '../pages/Auth/ResetPassword';
+import UserManagement from '../pages/UserManagement';
+import DashboardLayout from '../layouts/DashboardLayout';
+import AuthPageLayout from '../layouts/AuthPageLayout';
+import Alerts from '../pages/Alerts';
+import ContentMangement from '../pages/ContentManagement';
+import ActivityLogs from '../pages/ActivityLogs';
+import Transactions from '../pages/Transactions';
+import Settings from '../pages/Settings';
 
 
 export default function Routers() {
@@ -17,7 +25,7 @@ export default function Routers() {
     <div>
       <Routes>
 
-        <Route element={<AuthProtectRoutes />}>
+        <Route element={<AuthPageLayout />}>
           <Route path='/' element={<Login />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/notify' element={<Notify />} />
@@ -26,8 +34,14 @@ export default function Routers() {
     
         </Route>
         
-         <Route element={<ProtectRoutes />}>
+         <Route element={<DashboardLayout />}>
             <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/user-management' element={<UserManagement />} />
+            <Route path='/alerts' element={<Alerts />} />
+            <Route path='/content-management' element={<ContentMangement />} />
+            <Route path='/activity-logs' element={<ActivityLogs />} />
+            <Route path='/transactions' element={<Transactions />} />
+            <Route path='/settings' element={<Settings />} />
         </Route>
 
     

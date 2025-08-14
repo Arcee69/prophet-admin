@@ -29,7 +29,7 @@ const Login = () => {
       password: values?.password,
     };
 
-    navigate("/user-management")
+    navigate("/dashboard")
 
     // dispatch(loginUser(data))
     //   .then((res) => {

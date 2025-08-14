@@ -19,14 +19,14 @@ const DashboardLayout = () => {
       
       <div className={`fixed top-0 left-0 h-full bg-[#fff] z-50 transition-transform duration-300 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
-      } ${path === "/report" ? "" : "lg:translate-x-0 lg:w-[16%]"} `}>
+      } ${path === "/report" ? "" : "lg:translate-x-0 lg:w-[20%]"} `}>
         <Sidebar closeSidebar={() => setSidebarOpen(false)} />
       </div>
 
       {/* Main Content Area */}
-      <div className={`${path === "/report" ? "" : "lg:w-[84%] lg:ml-[16%]"} flex flex-col w-full  h-full`}>
+      <div className={`${path === "/report" ? "" : "lg:w-[80%] lg:ml-[20%]"} flex flex-col w-full  h-full`}>
         {/* Fixed Header */}
-        <div className={`${path === "/report" ? "" : "lg:w-[84%]" } fixed top-0 w-full  z-50 bg-white shadow-sm`}>
+        <div className={`${path === "/report" ? "" : "lg:w-[80%]" } fixed top-0 w-full  z-50 bg-white shadow-sm`}>
           <Header toggleSidebar={toggleSidebar} />
         </div>
 
