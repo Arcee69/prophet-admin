@@ -14,7 +14,7 @@ const SideModal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex bg-[#000] bg-opacity-10  justify-end">
+    <div className="fixed inset-0 z-50 flex bg-transparent bg-opacity-10  justify-end">
       {/* Overlay */}
       <div
         className="fixed inset-0 bg-none"
@@ -22,10 +22,10 @@ const SideModal = ({ isOpen, onClose, children }) => {
       ></div>
 
       {/* Modal content overflow-y-auto*/}
-      <div className="relative w-3/4 md:w-[640px] bg-white h-full shadow-lg  transition-transform transform translate-x-0">
+      <div className="relative w-3/4 md:w-[546px] bg-white h-full shadow-lg  transition-transform transform translate-x-0">
         {/* Close Button */}
             <button
-                className="absolute top-4 right-4 text-[#EA3A3D] text-[21px] hover:text-gray-800"
+                className="absolute top-4 right-4 text-[#000] cursor-pointer text-[21px] hover:text-gray-800"
                 onClick={onClose}
             >
             &#10005;
