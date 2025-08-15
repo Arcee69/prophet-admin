@@ -6,10 +6,10 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6'
 
 import Kebab from "../../assets/svg/kebab.svg"
 import SideModal from '../../components/sideModal'
-import AddNewUser from './components/AddNewUser'
-import UserDetails from './components/UserDetails'
+import AddNewRole from './components/AddNewRole'
+import RoleDetails from './components/RoleDetails'
 
-const UserManagement = () => {
+const RoleManagement = () => {
   const [search, setSearch] = useState("")
   const [status, setStatus] = useState("")
   const [category, setCategory] = useState("")
@@ -18,24 +18,24 @@ const UserManagement = () => {
   const [openDetailsModal, setOpenDetailsModal] = useState(false)
   const itemsPerPage = 3
 
-  const users = [
-    { name: "Lola Adesiye", email: "Mail@mail.com", dateCreated: "21/12/2022", role: "Admin", status: "Active" },
-    { name: "Chukwuma Ciroma", email: "Mail@mail.com", dateCreated: "21/12/2022", role: "Admin", status: "Active" },
-    { name: "Adekunle Danladi", email: "Mail@mail.com", dateCreated: "21/12/2022", role: "Super Admin", status: "Active" },
+  const roles = [
+    { name: "Admin", description: "This role is responsible for managing user accounts, configurations.", status: "Active" },
+    { name: "Analyst", description: "This role is responsible for managing user accounts, configurations.", status: "Active" },
+    { name: "Developer", description: "This role is responsible for managing user accounts, configurations.", status: "Active" },
   ]
 
    // Filter users based on search, status, and category
-  const filteredUsers = users.filter(user => 
-    user.name.toLowerCase().includes(search.toLowerCase()) &&
-    (status === "" || user.status === status) &&
+  const filteredRoles = roles.filter(role => 
+    role.name.toLowerCase().includes(search.toLowerCase()) &&
+    (status === "" || role.status === status) &&
     (category === "" || category === "All")
   )
 
   // Calculate pagination
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  const currentUsers = filteredUsers.slice(indexOfFirstItem, indexOfLastItem)
-  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage)
+  const currentRoles = filteredRoles.slice(indexOfFirstItem, indexOfLastItem)
+  const totalPages = Math.ceil(filteredRoles.length / itemsPerPage)
 
   const handlePrevious = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1)
@@ -49,8 +49,8 @@ const UserManagement = () => {
     <div className='flex flex-col gap-[57px]'>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col gap-2'>
-          <p className='text-DARK-300 text-[30px] font-jost leading-[38px] font-semibold'>User Management</p>
-          <p className='text-GREY-500 font-jost text-base leading-6'>Manage Users here</p>
+          <p className='text-DARK-300 text-[30px] font-jost leading-[38px] font-semibold'>Role Management</p>
+          <p className='text-GREY-500 font-jost text-base leading-6'>Manage Roles and their Permissions here</p>
         </div>
         <button
           type='button'
@@ -65,7 +65,7 @@ const UserManagement = () => {
       <div className='w-full bg-white rounded-[15px] py-[30px] px-6 flex flex-col gap-[15px]'>
         <div className='bg-GREY-50 p-5 rounded-lg flex items-center gap-3'>
           <div className='flex flex-col gap-1.5'>
-            <p className='text-GREY-300 font-jost text-sm '>Search for Users</p>
+            <p className='text-GREY-300 font-jost text-sm '>Search for Roles</p>
             <div className='w-[586px] lg:flex items-center border border-[#E4E7EC] bg-[#fff] rounded-lg h-[36px]'>
               <div className='bg-[#fff] h-full rounded-tl-lg rounded-bl-lg flex items-center p-2'>
                   <IoSearch className='w-4 h-4 text-[#00000066]' />
@@ -116,23 +116,19 @@ const UserManagement = () => {
             <thead>
               <tr className='bg-NEUTRAL-200'>
                 <th className='p-4 text-left'><input type='checkbox' /></th>
-                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Name</th>
-                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Email</th>
-                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Date Created</th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Role</th>
+                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Description</th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Status</th>
                 <th className='p-4 text-left text-sm font-jost text-DARK-500'></th>
               </tr>
             </thead>
             <tbody>
-              {currentUsers.map((user, index) => (
+              {currentRoles.map((role, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-GREY-50'}>
                   <td className='p-4'><input type='checkbox' /></td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{user.name}</td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{user.email}</td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{user.dateCreated}</td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{user.role}</td>
-                  <td className='p-4'><span className='bg-GREEN-50 text-GREEN-700 text-xs font-medium px-2.5 py-2 rounded-lg'>{user.status}</span></td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{role.name}</td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{role.description}</td>
+                  <td className='p-4'><span className='bg-GREEN-50 text-GREEN-700 text-xs font-medium px-2.5 py-2 rounded-lg'>{role.status}</span></td>
                   <td className='p-4'>
                     <img src={Kebab} alt='Kebab' className='cursor-pointer' onClick={() => setOpenDetailsModal(true)} />
                   </td>
@@ -162,15 +158,15 @@ const UserManagement = () => {
         </div>
       </div>
 
-      <SideModal isOpen={openAddNewModal} onClose={() => setOpenAddNewModal(false)} width={"md:w-[546px]"}>
-        <AddNewUser handleClose={() => setOpenAddNewModal(false)}/>
+      <SideModal isOpen={openAddNewModal} onClose={() => setOpenAddNewModal(false)} width={"md:w-[887px]"}>
+        <AddNewRole handleClose={() => setOpenAddNewModal(false)}/>
       </SideModal>
 
-      <SideModal isOpen={openDetailsModal} onClose={() => setOpenDetailsModal(false)} width={"md:w-[546px]"}>
-        <UserDetails handleClose={() => setOpenDetailsModal(false)}/>
+      <SideModal isOpen={openDetailsModal} onClose={() => setOpenDetailsModal(false)} width={"md:w-[887px]"}>
+        <RoleDetails handleClose={() => setOpenDetailsModal(false)}/>
       </SideModal>
     </div>
   )
 }
 
-export default UserManagement
+export default RoleManagement

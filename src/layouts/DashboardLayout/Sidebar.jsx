@@ -49,6 +49,13 @@ const Sidebar = ({ closeSidebar }) => {
                 <p className={`${location.pathname === "/user-management" ? "text-white" : "text-GREY-400"} font-jost text-sm group-hover:text-white`}>User Management</p>
             </div>
             <div 
+                className={`${location.pathname === "/role-management" ? "bg-ORANGE-100" : "bg-white"} flex items-center px-4 py-2.5 gap-[5px] shadow w-[260px] cursor-pointer group hover:bg-ORANGE-100 rounded-[6px]`}
+                onClick={() => navigate("/role-management")}
+            >
+                <AiOutlineGift className={`${location.pathname === "/role-management" ? "text-white" : "text-GREY-400"} w-5 h-5  group-hover:text-white`} />
+                <p className={`${location.pathname === "/role-management" ? "text-white" : "text-GREY-400"} font-jost text-sm group-hover:text-white`}>Role Management</p>
+            </div>
+            <div 
                 className={`${location.pathname === "/alerts" ? "bg-ORANGE-100" : "bg-white"} flex items-center px-4 py-2.5 gap-[5px] shadow w-[260px] cursor-pointer group hover:bg-ORANGE-100 rounded-[6px]`}
                 onClick={() => navigate("/alerts")}
             >

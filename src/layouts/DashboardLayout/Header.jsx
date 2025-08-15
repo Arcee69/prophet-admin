@@ -59,7 +59,7 @@ const Header = ({ toggleSidebar }) => {
                         </div>
                         <LuBell className='w-5 h-5 text-[#9CA3AF]' />
                         <img src={Chat} alt='Chat' className='w-[25px] h-[25px]' />
-                        <div className='flex items-center gap-[7px]'>
+                        <div className='flex items-center gap-[7px] cursor-pointer' onClick={() => navigate("/")}>
                             <img src={Girl} alt='Girl' className='w-[32px] h-[32px]' />
                             <IoIosArrowDown className='w-5 h-5 text-GREY-500' />
                         </div>
