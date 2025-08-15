@@ -125,7 +125,7 @@ const UserManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {currentUsers.map((user, index) => (
+              {currentUsers.length > 0 ? currentUsers.map((user, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-GREY-50'}>
                   <td className='p-4'><input type='checkbox' /></td>
                   <td className='p-4 text-sm font-jost text-DARK-500'>{user.name}</td>
@@ -137,7 +137,13 @@ const UserManagement = () => {
                     <img src={Kebab} alt='Kebab' className='cursor-pointer' onClick={() => setOpenDetailsModal(true)} />
                   </td>
                 </tr>
-              ))}
+              )) : (
+                  <tr>
+                      <td colSpan="7" className='p-4 text-center text-GREY-200 font-jost'>
+                          No Users Found
+                      </td>
+                  </tr>
+              )}
             </tbody>
           </table>
           <div className='flex justify-between items-center p-4 mt-4'>

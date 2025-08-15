@@ -123,7 +123,7 @@ const RoleManagement = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {currentRoles.map((role, index) => (
+                        {currentRoles.length > 0 ? currentRoles.map((role, index) => (
                             <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-GREY-50'}>
                                 <td className='p-4'><input type='checkbox' /></td>
                                 <td className='p-4 text-sm font-jost text-DARK-500'>{role.name}</td>
@@ -133,7 +133,13 @@ const RoleManagement = () => {
                                     <img src={Kebab} alt='Kebab' className='cursor-pointer' onClick={() => setOpenDetailsModal(true)} />
                                 </td>
                             </tr>
-                        ))}
+                        )) : (
+                        <tr>
+                            <td colSpan="7" className='p-4 text-center text-GREY-200 font-jost'>
+                                No Roles Found
+                            </td>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
                 <div className='flex justify-between items-center p-4 mt-4'>

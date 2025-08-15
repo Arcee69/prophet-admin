@@ -104,7 +104,7 @@ const GlobalAlerts = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentSectors.map((sector, index) => (
+                    {currentSectors.length > 0 ? currentSectors.map((sector, index) => (
                         <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-GREY-50'}>
                             <td className='p-4'><input type='checkbox' /></td>
                             <td className='p-4 text-sm font-jost text-DARK-500'>{sector.brand}</td>
@@ -124,7 +124,13 @@ const GlobalAlerts = () => {
                                 <img src={Kebab} alt='Kebab' className='cursor-pointer' onClick={() => setOpenDetailsModal(true)} />
                             </td>
                         </tr>
-                    ))}
+                    )) : (
+                        <tr>
+                            <td colSpan="7" className='p-4 text-center text-GREY-200 font-jost'>
+                                No Sectors Found
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
             <div className='flex justify-between items-center p-4 mt-4'>
