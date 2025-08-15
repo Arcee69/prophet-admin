@@ -40,13 +40,23 @@
   --color-GREY-700: #909090;
   --color-GREY-800: #D0D5DD;
   --color-GREY-900: #EAECF0;
+  --color-GREY-1000: #98A2B3;
+  --color-GREY-1050: #F2F4F7;
+  --color-GREY-1100: #344054;
 
+  --color-YELLOW-50: #FFFAEB;
+  --color-YELLOW-700: #B54708;
 
   --color-ORANGE-100: #F48A1F;
 
+  --color-RED-50: #FEF3F2;
   --color-RED-100: #AF202D;
+  --color-RED-700: #B42318;
 
   --color-BLUE-100: #BDDAFF;
+  --color-BLUE-200: #A3AED0;
+  --color-BLUE-300: #2B3674;
+  --color-BLUE-400: #003054;
   
 
   /* Custom Font Family */
