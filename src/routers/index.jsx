@@ -18,6 +18,7 @@ import ActivityLogs from '../pages/ActivityLogs';
 import Transactions from '../pages/Transactions';
 import Settings from '../pages/Settings';
 import RoleManagement from '../pages/RoleManagement ';
+import BrandManagement from '../pages/BrandManagement';
 
 
 export default function Routers() {
@@ -38,7 +39,8 @@ export default function Routers() {
          <Route element={<ProtectRoutes />}>
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/user-management' element={<UserManagement />} />
-            <Route path='/role-management' element={<RoleManagement />} />
+            <Route path='/admin-management' element={<RoleManagement />} />
+            <Route path='/brand-management' element={<BrandManagement />} />
             <Route path='/alerts' element={<Alerts />} />
             <Route path='/content-management' element={<ContentMangement />} />
             <Route path='/activity-logs' element={<ActivityLogs />} />

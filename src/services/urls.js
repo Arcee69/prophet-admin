@@ -8,5 +8,8 @@ export const appUrls = {
     RESEND_OTP_URL: "/v1/auth/resend-verification-code",
 
     //USERS ENDPOINTS
-    USERS_URL: "/v1/user"
+    USERS_URL: "/v1/user",
+
+    //BRANDS ENDPOINTS
+    BRANDS_URL: "/v1/brand"
 };

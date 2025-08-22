@@ -5,6 +5,7 @@ import { thunk } from 'redux-thunk';
 import loginReducer from "../features/auth/loginSlice";
 import getUsersReducer from "../features/users/getUsersSlice";
 import getAdminsReducer from "../features/admins/getAdminsSlice";
+import getBrandsReducer from "../features/brands/getBrandsSlice";
 
 const persistConfig = {
     key: 'root',
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
     // Add reducers here
     userLogin: loginReducer,
     allUsers: getUsersReducer,
-    allAdmins: getAdminsReducer
+    allAdmins: getAdminsReducer,
+    allBrands: getBrandsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
