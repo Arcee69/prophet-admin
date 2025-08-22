@@ -69,13 +69,13 @@ const Sidebar = ({ closeSidebar }) => {
                 <AiOutlineGift className={`${location.pathname === "/content-management" ? "text-white" : "text-GREY-400"} w-5 h-5  group-hover:text-white`} />
                 <p className={`${location.pathname === "/content-management" ? "text-white" : "text-GREY-400"} font-jost text-sm group-hover:text-white`}>Content Management</p>
             </div>
-            <div 
+            {/* <div 
                 className={`${location.pathname === "/activity-logs" ? "bg-ORANGE-100" : "bg-white"} flex items-center px-4 py-2.5 gap-[5px] shadow w-[260px] cursor-pointer group hover:bg-ORANGE-100 rounded-[6px]`}
                 onClick={() => navigate("/activity-logs")}
             >
                 <AiOutlineGift className={`${location.pathname === "/activity-logs" ? "text-white" : "text-GREY-400"} w-5 h-5  group-hover:text-white`} />
                 <p className={`${location.pathname === "/activity-logs" ? "text-white" : "text-GREY-400"} font-jost text-sm group-hover:text-white`}>Activity Logs</p>
-            </div>
+            </div> */}
             <div 
                 className={`${location.pathname === "/transactions" ? "bg-ORANGE-100" : "bg-white"} flex items-center px-4 py-2.5 gap-[5px] shadow w-[260px] cursor-pointer group hover:bg-ORANGE-100 rounded-[6px]`}
                 onClick={() => navigate("/transactions")}
@@ -84,11 +84,18 @@ const Sidebar = ({ closeSidebar }) => {
                 <p className={`${location.pathname === "/transactions" ? "text-white" : "text-GREY-400"} font-jost text-sm group-hover:text-white`}>Transactions</p>
             </div>
             <div 
-                className={`${location.pathname === "/settings" ? "bg-ORANGE-100" : "bg-white"} flex items-center px-4 py-2.5 gap-[5px] shadow w-[260px] cursor-pointer group hover:bg-ORANGE-100 rounded-[6px]`}
-                onClick={() => navigate("/settings")}
+                className={`${location.pathname === "/subscriptions" ? "bg-ORANGE-100" : "bg-white"} flex items-center px-4 py-2.5 gap-[5px] shadow w-[260px] cursor-pointer group hover:bg-ORANGE-100 rounded-[6px]`}
+                onClick={() => navigate("/subscriptions")}
             >
-                <AiOutlineGift className={`${location.pathname === "/settings" ? "text-white" : "text-GREY-400"} w-5 h-5  group-hover:text-white`} />
-                <p className={`${location.pathname === "/settings" ? "text-white" : "text-GREY-400"} font-jost text-sm group-hover:text-white`}>Settings</p>
+                <AiOutlineGift className={`${location.pathname === "/subscriptions" ? "text-white" : "text-GREY-400"} w-5 h-5  group-hover:text-white`} />
+                <p className={`${location.pathname === "/subscriptions" ? "text-white" : "text-GREY-400"} font-jost text-sm group-hover:text-white`}>Subscriptions</p>
+            </div>
+            <div 
+                className={`${location.pathname === "/pricing-settings" ? "bg-ORANGE-100" : "bg-white"} flex items-center px-4 py-2.5 gap-[5px] shadow w-[260px] cursor-pointer group hover:bg-ORANGE-100 rounded-[6px]`}
+                onClick={() => navigate("/pricing-settings")}
+            >
+                <AiOutlineGift className={`${location.pathname === "/pricing-settings" ? "text-white" : "text-GREY-400"} w-5 h-5  group-hover:text-white`} />
+                <p className={`${location.pathname === "/pricing-settings" ? "text-white" : "text-GREY-400"} font-jost text-sm group-hover:text-white`}>Pricing Settings</p>
             </div>
         </div>
 

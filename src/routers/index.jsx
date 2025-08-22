@@ -19,6 +19,7 @@ import Transactions from '../pages/Transactions';
 import Settings from '../pages/Settings';
 import RoleManagement from '../pages/RoleManagement ';
 import BrandManagement from '../pages/BrandManagement';
+import Subscriptions from '../pages/Subscriptions';
 
 
 export default function Routers() {
@@ -45,7 +46,8 @@ export default function Routers() {
             <Route path='/content-management' element={<ContentMangement />} />
             <Route path='/activity-logs' element={<ActivityLogs />} />
             <Route path='/transactions' element={<Transactions />} />
-            <Route path='/settings' element={<Settings />} />
+            <Route path='/subscriptions' element={<Subscriptions />} />
+            <Route path='/pricing-settings' element={<Settings />} />
         </Route>
 
     
