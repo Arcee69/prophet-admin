@@ -29,18 +29,18 @@ const Login = () => {
       password: values?.password,
     };
 
-    navigate("/dashboard")
+    // navigate("/dashboard")
 
-    // dispatch(loginUser(data))
-    //   .then((res) => {
-    //     console.log(res, "best");
-    //     if (res?.type === "user/loginUser/fulfilled") {
-    //       setLoading(false);
-    //       navigate("/dashboard");
-    //     } else {
-    //       setLoading(false);
-    //     }
-    //   });
+    dispatch(loginUser(data))
+      .then((res) => {
+        console.log(res, "best");
+        if (res?.type === "user/loginUser/fulfilled") {
+          setLoading(false);
+          navigate("/dashboard");
+        } else {
+          setLoading(false);
+        }
+      });
   };
 
 

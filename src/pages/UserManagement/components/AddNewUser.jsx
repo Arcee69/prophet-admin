@@ -7,6 +7,8 @@ const AddNewUser = ({ handleClose }) => {
     const [userName, setUserName] = useState("")
     const [email, setEmail] = useState("")
     const [role, setRole] = useState("")
+    const [loading, setLoading] = useState(false)
+
 
   return (
     <div className='flex flex-col gap-5'>
@@ -38,8 +40,8 @@ const AddNewUser = ({ handleClose }) => {
                         onChange={(e) => setRole(e.target.value)}
                         className='appearance-none outline-none font-jost w-full'
                     >
-                        <option value="Admin">Admin</option>
-                        <option value="Super Admin">Super Admin</option>
+                        <option value="Admin">Social Media Manager</option>
+                        <option value="Super Admin">Brand Manager</option>
                     </select>
                     <IoIosArrowDown className='w-4 h-4 text-GREY-200' />
                 </div>
@@ -70,6 +72,7 @@ const AddNewUser = ({ handleClose }) => {
                 text="Save User"
                 action={handleClose}
                 textColor="text-white"
+                loading={loading}
             />
         </div>
     </div>

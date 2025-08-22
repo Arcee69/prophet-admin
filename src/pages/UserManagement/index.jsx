@@ -8,6 +8,7 @@ import Kebab from "../../assets/svg/kebab.svg"
 import SideModal from '../../components/sideModal'
 import AddNewUser from './components/AddNewUser'
 import UserDetails from './components/UserDetails'
+import { useSelector } from 'react-redux'
 
 const UserManagement = () => {
   const [search, setSearch] = useState("")
@@ -16,13 +17,17 @@ const UserManagement = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [openAddNewModal, setOpenAddNewModal] = useState(false)
   const [openDetailsModal, setOpenDetailsModal] = useState(false)
-  const itemsPerPage = 3
+  const itemsPerPage = 10
 
-  const users = [
-    { name: "Lola Adesiye", email: "Mail@mail.com", dateCreated: "21/12/2022", role: "Admin", status: "Active" },
-    { name: "Chukwuma Ciroma", email: "Mail@mail.com", dateCreated: "21/12/2022", role: "Admin", status: "Active" },
-    { name: "Adekunle Danladi", email: "Mail@mail.com", dateCreated: "21/12/2022", role: "Super Admin", status: "Active" },
-  ]
+  const { users } = useSelector((state) => state.allUsers)
+  console.log(users, "data")
+
+
+  // const users = [
+  //   { name: "Lola Adesiye", email: "Mail@mail.com", dateCreated: "21/12/2022", role: "Admin", status: "Active" },
+  //   { name: "Chukwuma Ciroma", email: "Mail@mail.com", dateCreated: "21/12/2022", role: "Admin", status: "Active" },
+  //   { name: "Adekunle Danladi", email: "Mail@mail.com", dateCreated: "21/12/2022", role: "Super Admin", status: "Active" },
+  // ]
 
    // Filter users based on search, status, and category
   const filteredUsers = users.filter(user => 
@@ -118,8 +123,9 @@ const UserManagement = () => {
                 <th className='p-4 text-left'><input type='checkbox' /></th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Name</th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Email</th>
+                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Phone</th>
+                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Subscription Plan</th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Date Created</th>
-                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Role</th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Status</th>
                 <th className='p-4 text-left text-sm font-jost text-DARK-500'></th>
               </tr>
@@ -130,8 +136,9 @@ const UserManagement = () => {
                   <td className='p-4'><input type='checkbox' /></td>
                   <td className='p-4 text-sm font-jost text-DARK-500'>{user.name}</td>
                   <td className='p-4 text-sm font-jost text-DARK-500'>{user.email}</td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{user.phone}</td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{user.plan}</td>
                   <td className='p-4 text-sm font-jost text-DARK-500'>{user.dateCreated}</td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{user.role}</td>
                   <td className='p-4'><span className='bg-GREEN-50 text-GREEN-700 text-xs font-medium px-2.5 py-2 rounded-lg'>{user.status}</span></td>
                   <td className='p-4'>
                     <img src={Kebab} alt='Kebab' className='cursor-pointer' onClick={() => setOpenDetailsModal(true)} />

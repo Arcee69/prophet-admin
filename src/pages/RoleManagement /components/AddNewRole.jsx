@@ -3,10 +3,40 @@ import Chart from "../../../assets/svg/chart.svg"
 import { IoIosArrowDown } from 'react-icons/io'
 import Buttons from '../../../components/Buttons'
 import { IoSearch } from 'react-icons/io5'
+import { api } from '../../../services/api'
+import { appUrls } from '../../../services/urls'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
 
-const AddNewRole = ({ handleClose }) => {
-    const [description, setDescription] = useState("")
+const AddNewRole = ({ handleClose, fetchAdmins }) => {
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
     const [role, setRole] = useState("")
+    const [loading, setLoading] = useState(false)
+
+    const dispatch = useDispatch()
+
+
+    const addAdmin = async () => {
+        setLoading(true)
+        const adminData = {
+            "name": name,
+            "email": email,
+            "role": role
+        }
+        try {
+            const res = await api.post(`${appUrls.USERS_URL}/create/admin`, adminData)
+            console.log(res, "master")
+            toast.success("Admin Created Successfully")
+            await dispatch(fetchAdmins())
+            handleClose()
+        } catch (err) {
+            console.log(err, "Admin Error")
+            toast.error(`${err.data.message}`)
+        } finally {
+            setLoading(false)
+        }
+    }
 
 
     const permissions = [
@@ -25,10 +55,36 @@ const AddNewRole = ({ handleClose }) => {
     <div className='flex flex-col gap-5'>
         <img src={Chart} alt='Chart' className='w-[48px] h-[48px]' />
         <div className='flex flex-col gap-2'>
-            <p className='font-jost text-DARK-300 text-[18px] font-medium leading-7'>New Role</p>
-            <p className='font-jost text-GREY-200 leading-5 text-sm'>Add a new Role here</p>
+            <p className='font-jost text-DARK-300 text-[18px] font-medium leading-7'>New Admin</p>
+            <p className='font-jost text-GREY-200 leading-5 text-sm'>Add a new Admin here</p>
         </div>
         <div className='flex gap-5 flex-col'>
+            <div className='flex flex-col gap-[5px]'>
+                <p className='font-jost text-base leading-[100%] text-DARK-400'>Name</p>
+                <div className='border-GREY-700 rounded-[8px] border h-[44px] p-2'>
+                    <input 
+                        name='name'
+                        type='text'
+                        placeholder='Enter Admin Name...'
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className='w-full bg-transparent outline-none font-jost text-sm'
+                    />
+                </div>
+            </div>
+            <div className='flex flex-col gap-[5px]'>
+                <p className='font-jost text-base leading-[100%] text-DARK-400'>Email</p>
+                <div className='border-GREY-700 rounded-[8px] border h-[44px] p-2'>
+                    <input 
+                        name='email'
+                        type='text'
+                        placeholder='Enter Email...'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className='w-full bg-transparent outline-none font-jost text-sm'
+                    />
+                </div>
+            </div>
             <div className='flex flex-col gap-[5px]'>
                 <p className='font-jost text-base leading-[100%] text-DARK-400'>Role</p>
                 <div className='border-GREY-700 flex items-center  rounded-[8px] border h-[44px] p-2'>
@@ -38,23 +94,12 @@ const AddNewRole = ({ handleClose }) => {
                         onChange={(e) => setRole(e.target.value)}
                         className='appearance-none outline-none font-jost w-full'
                     >
-                        <option value="Admin">Admin</option>
-                        <option value="Super Admin">Super Admin</option>
+                        <option value="">Select Role</option>
+                        <option value="sub_admin">Admin</option>
+                        <option value="super_admin">Super Admin</option>
+                        <option value="content_admin">Content Admin</option>
                     </select>
                     <IoIosArrowDown className='w-4 h-4 text-GREY-200' />
-                </div>
-            </div>
-            <div className='flex flex-col gap-[5px]'>
-                <p className='font-jost text-base leading-[100%] text-DARK-400'>Desription</p>
-                <div className='border-GREY-700 rounded-[8px] border h-[44px] p-2'>
-                    <input 
-                        name='description'
-                        type='text'
-                        placeholder='Enter Description...'
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className='w-full bg-transparent outline-none font-jost text-sm'
-                    />
                 </div>
             </div>
 
@@ -102,12 +147,14 @@ const AddNewRole = ({ handleClose }) => {
                 text="Cancel"
                 action={handleClose}
                 textColor="text-GREY-300"
+                
             />
             <Buttons 
                 className="w-full bg-DARK-100"
                 text="Save Role"
-                action={handleClose}
+                action={addAdmin}
                 textColor="text-white"
+                loading={loading}
             />
         </div>
     </div>

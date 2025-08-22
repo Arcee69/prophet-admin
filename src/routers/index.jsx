@@ -26,7 +26,7 @@ export default function Routers() {
     <div>
       <Routes>
 
-        <Route element={<AuthPageLayout />}>
+        <Route element={<AuthProtectRoutes />}>
           <Route path='/' element={<Login />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/notify' element={<Notify />} />
@@ -35,7 +35,7 @@ export default function Routers() {
     
         </Route>
         
-         <Route element={<DashboardLayout />}>
+         <Route element={<ProtectRoutes />}>
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/user-management' element={<UserManagement />} />
             <Route path='/role-management' element={<RoleManagement />} />

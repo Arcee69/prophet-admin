@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { IoSearch } from 'react-icons/io5'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -8,6 +8,8 @@ import { IoIosArrowDown } from 'react-icons/io';
 
 import Girl from "../../assets/png/girl.png"
 import Chat from "../../assets/svg/chat.svg"
+import { logout } from '../../features/auth/loginSlice';
+import { useDispatch } from 'react-redux';
 
 // import Note from "../../assets/svg/note.svg"
 // import Bell from "../../assets/svg/bell.svg"
@@ -16,10 +18,38 @@ import Chat from "../../assets/svg/chat.svg"
 
 const Header = ({ toggleSidebar }) => {
     const [search, setSearch] = useState("")
+    const [showLogout, setShowLogout] = useState(false)
+    const logoutRef = useRef(null)
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const location = useLocation()
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (logoutRef.current && !logoutRef.current.contains(event.target)) {
+                setShowLogout(false);
+            }
+        };
+
+        if (showLogout) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showLogout]);
+
+    const handleLogout = () => {
+        dispatch(logout());
+        Cookies.remove("userProps");
+        Cookies.remove("token");
+        navigate("/"); 
+    };
 
   return (
     <div className='py-[18px] px-[28px] h-[72px]'>
@@ -59,9 +89,14 @@ const Header = ({ toggleSidebar }) => {
                         </div>
                         <LuBell className='w-5 h-5 text-[#9CA3AF]' />
                         <img src={Chat} alt='Chat' className='w-[25px] h-[25px]' />
-                        <div className='flex items-center gap-[7px] cursor-pointer' onClick={() => navigate("/")}>
+                        <div ref={logoutRef} className='relative flex items-center gap-[7px] cursor-pointer' onClick={() => setShowLogout(!showLogout)}>
                             <img src={Girl} alt='Girl' className='w-[32px] h-[32px]' />
                             <IoIosArrowDown className='w-5 h-5 text-GREY-500' />
+                            {showLogout && (
+                                <div className='absolute top-full right-0 mt-2 bg-white border border-gray-200 rounded shadow-lg p-2 z-10'>
+                                    <button onClick={handleLogout} className='text-red-500 hover:text-red-700'>Logout</button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
