@@ -25,9 +25,8 @@ const RoleManagement = () => {
   const [openDetailsModal, setOpenDetailsModal] = useState(false)
   const [openDeleteAdmin, setOpenDeleteAdmin] = useState(false)
   const [adminData, setAdminData] = useState([])
-  const [openMenuIndex, setOpenMenuIndex] = useState(null) // New state to track which row's menu is open
+  const [openMenuIndex, setOpenMenuIndex] = useState(null) // state to track which row's menu is open
 
-  const itemsPerPage = 10
 
   const dispatch = useDispatch()
 
@@ -145,7 +144,7 @@ const RoleManagement = () => {
                     Loading Data...
                   </td>
                 </tr>
-              ) : filteredAdmins.length > 0 ? filteredAdmins.map((admin, index) => (
+              ) : filteredAdmins?.length > 0 ? filteredAdmins?.map((admin, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-GREY-50'}>
                   <td className='p-4'><input type='checkbox' /></td>
                   <td className='p-4 text-sm font-jost text-DARK-500'>{admin.role}</td>

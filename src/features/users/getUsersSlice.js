@@ -5,9 +5,9 @@ import { appUrls } from '../../services/urls';
 
 export const fetchUsers = createAsyncThunk(
     'users/fetchUsers',
-    async (values, { rejectWithValue }) => {
+    async (page = 1, { rejectWithValue }) => {
       try {
-        const data = await api.get(appUrls?.USERS_URL + `/role?type=user`)
+        const data = await api.get(appUrls?.USERS_URL + `/role?type=user&page=${page}`)
         return data?.data;
       } catch (error) {
         return rejectWithValue(error);
@@ -19,6 +19,7 @@ const getUsersSlice = createSlice({
     name: 'users',
     initialState: {
       users: [],
+      pagination: null,
       loading: false,
       error: null
     },
@@ -32,6 +33,12 @@ const getUsersSlice = createSlice({
         .addCase(fetchUsers.fulfilled, (state, action) => {
           state.loading = false;
           state.users = action.payload;
+          state.pagination = {
+            currentPage: action.payload.current_page,
+            nextPageUrl: action.payload.next_page_url,
+            prevPageUrl: action.payload.prev_page_url,
+            total: action.payload.total,
+          };
         })
         .addCase(fetchUsers.rejected, (state, action) => {
           state.loading = false;
