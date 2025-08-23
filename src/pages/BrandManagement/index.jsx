@@ -16,6 +16,7 @@ import AddNewBrand from './components/AddNewBrand'
 import AddBulkBrand from './components/AddBulkBrand'
 import DeleteBrand from './components/DeleteBrand'
 import ModalPop from '../../components/modalPop'
+import EditBrand from './components/EditBrand'
 
 const BrandManagement = () => {
   const [search, setSearch] = useState("")
@@ -26,12 +27,11 @@ const BrandManagement = () => {
   const [nextPageUrl, setNextPageUrl] = useState(null);
   const [openAddNewModal, setOpenAddNewModal] = useState(false)
   const [openAddBulkModal, setOpenAddBulkModal] = useState(false)
-  const [openDetailsModal, setOpenDetailsModal] = useState(false)
+  const [openEditBrandModal, setOpenEditBrandModal] = useState(false)
   const [openDeleteBrand, setOpenDeleteBrand] = useState(false)
   const [brandData, setBrandData] = useState([])
-  const [openMenuIndex, setOpenMenuIndex] = useState(null) // New state to track which row's menu is open
+  const [openMenuIndex, setOpenMenuIndex] = useState(null) // State to track which row's menu is open
 
-  const itemsPerPage = 10
 
   const dispatch = useDispatch()
 
@@ -189,6 +189,16 @@ const BrandManagement = () => {
                           </button>
                           <button 
                             onClick={() => { 
+                              setOpenEditBrandModal(true); 
+                              setBrandData(brand); 
+                              setOpenMenuIndex(null); 
+                            }} 
+                            className='text-gray-500 font-jost hover:text-gray-700'
+                          >
+                            Edit
+                          </button>
+                          <button 
+                            onClick={() => { 
                               setOpenDeleteBrand(true); 
                               setBrandData(brand); 
                               setOpenMenuIndex(null); 
@@ -237,13 +247,14 @@ const BrandManagement = () => {
         <AddNewBrand handleClose={() => setOpenAddNewModal(false)} fetchBrands={fetchBrands}/>
       </SideModal>
 
+      <SideModal isOpen={openEditBrandModal} onClose={() => setOpenEditBrandModal(false)} width={"md:w-[546px]"}>
+        <EditBrand handleClose={() => setOpenEditBrandModal(false)} brandData={brandData} fetchBrands={fetchBrands}/>
+      </SideModal>
+
       <SideModal isOpen={openAddBulkModal} onClose={() => setOpenAddBulkModal(false)} width={"md:w-[546px]"}>
         <AddBulkBrand handleClose={() => setOpenAddBulkModal(false)} fetchBrands={fetchBrands}/>
       </SideModal>
-{/* 
-      <SideModal isOpen={openDetailsModal} onClose={() => setOpenDetailsModal(false)} width={"md:w-[887px]"}>
-        <RoleDetails handleClose={() => setOpenDetailsModal(false)}/>
-      </SideModal> */}
+
 
       <ModalPop isOpen={openDeleteBrand}>
         <DeleteBrand 
