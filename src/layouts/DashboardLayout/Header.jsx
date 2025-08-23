@@ -5,6 +5,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { FiUser } from 'react-icons/fi'
 import { LuBell } from 'react-icons/lu'
 import { IoIosArrowDown } from 'react-icons/io';
+import Cookies from 'js-cookie'
 
 import Girl from "../../assets/png/girl.png"
 import Chat from "../../assets/svg/chat.svg"
@@ -94,7 +95,7 @@ const Header = ({ toggleSidebar }) => {
                             <IoIosArrowDown className='w-5 h-5 text-GREY-500' />
                             {showLogout && (
                                 <div className='absolute top-full right-0 mt-2 bg-white border border-gray-200 rounded shadow-lg p-2 z-10'>
-                                    <button onClick={handleLogout} className='text-red-500 hover:text-red-700'>Logout</button>
+                                    <button onClick={handleLogout} type='button' className='text-red-500 cursor-pointer hover:text-red-700'>Logout</button>
                                 </div>
                             )}
                         </div>
