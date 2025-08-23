@@ -63,7 +63,7 @@ const RoleManagement = () => {
     <div className='flex flex-col gap-[57px]'>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col gap-2'>
-          <p className='text-DARK-300 text-[30px] font-jost leading-[38px] font-semibold'>Role Management</p>
+          <p className='text-DARK-300 text-[30px] font-jost leading-[38px] font-semibold'>Admin Management</p>
           <p className='text-GREY-500 font-jost text-base leading-6'>Manage Admin Roles and their Permissions here</p>
         </div>
         <button
