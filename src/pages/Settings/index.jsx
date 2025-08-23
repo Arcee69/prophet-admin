@@ -2,7 +2,7 @@ import React from 'react'
 
 const Settings = () => {
   return (
-    <div>COMING Soon</div>
+    <div>Coming Soon</div>
   )
 }
 
