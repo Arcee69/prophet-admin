@@ -12,9 +12,12 @@ import Upload from "../../../../assets/svg/uploadIcon.svg"
 import { api } from '../../../../services/api';
 import { appUrls } from '../../../../services/urls';
 import { CgSpinner } from 'react-icons/cg';
+import { useNavigate } from 'react-router-dom';
 
 const AddBlog = () => {
     const [loading, setLoading] = useState(false)
+
+    const navigate = useNavigate()
 
     const formValidationSchema = Yup.object().shape({
         title: Yup.string().required("Blog Title is Required"),
@@ -28,8 +31,8 @@ const AddBlog = () => {
         formData.append("title", values?.title);
         formData.append("status", "publish");
         formData.append("body", values?.description);
-        formData.append("category", values?.category);
         formData.append("image", values?.imageDoc);
+        // formData.append("category", values?.category);
 
         await api.post(appUrls?.BLOGS_URL, formData)
             .then((res) => {
@@ -57,11 +60,11 @@ const AddBlog = () => {
 
     return (
         <div className='flex flex-col gap-5'>
-            <p></p>
+            <p className='font-lato text-[20px] text-GREY-1150'>Create Blog</p>
             <div className='w-full'>
                 <Formik
                     initialValues={{
-                        topic: "",
+                        title: "",
                         description: "",
                         category: "",
                     }}
@@ -94,7 +97,7 @@ const AddBlog = () => {
                                         :
                                         <label className="flex flex-col xs:w-full  h-56 py-4 px-0  border-2 bg-[#FAFCFF] border-BLUE-_200 border-dashed">
                                             <div className="flex flex-col my-auto items-center">
-                                                <img src={Upload} alt="upload" />
+                                                <img src={Upload} alt="upload" className='text-black'/>
                                                 <div className="text-center font-medium text-sm text-black">
                                                     Click to upload Thumbnails <span className='block text-black'>PNG or JPG (max 5mb)</span>
                                                 </div>
@@ -119,17 +122,17 @@ const AddBlog = () => {
 
 
                                 <div className="flex flex-col ">
-                                    <label htmlFor="Topic" className="font-euclid text-sm">Topic</label>
+                                    <label htmlFor="Topic" className="font-euclid text-sm">Title</label>
                                     <input
-                                        name="topic"
-                                        placeholder="Type topic here..."
+                                        name="title"
+                                        placeholder="Type title here..."
                                         type="text"
-                                        value={values.topic}
+                                        value={values.title}
                                         onChange={handleChange}
-                                        className="rounded-lg border-[#E5E5EA] font-euclid text-[#3A3A3C] outline-[#34C759] w-full mt-1.5 h-[56px] border-solid  p-2 border"
+                                        className="rounded-lg border-[#E5E5EA] bg-white font-jost text-[#3A3A3C] outline-none w-full mt-1.5 h-[56px] border-solid  p-2 border"
                                     />
-                                    {errors.topic && touched.topic ? (
-                                        <div className='text-RED-_100 text-xs'>{errors.topic}</div>
+                                    {errors.title && touched.title ? (
+                                        <div className='text-RED-_100 text-xs'>{errors.title}</div>
                                     ) : null}
                                 </div>
                               
@@ -143,7 +146,7 @@ const AddBlog = () => {
                                         modules={modules}
                                         formats={formats}
                                         style={{ backgroundColor: "#fff", minHeight: "193px", border: '1px solid #ccc', borderRadius: '4px', padding: '10px' }}
-                                        className="lg:w-full h-[100vh] mt-1.5 outline-none"
+                                        className="lg:w-full h-[50vh] bg-white mt-1.5 outline-none"
                                     />
 
                                     {errors.description && touched.description ?
@@ -154,14 +157,22 @@ const AddBlog = () => {
 
                             </div>
 
+                            <div className='flex items-center gap-10 justify-between'>
+                                <button
+                                    className="border border-[#CBD6E0] bg-white mt-5 text-[#fff] rounded-lg p-3 cursor-pointer w-full h-[54px] flex flex-col items-center justify-center"
+                                    type="button"
+                                    onClick={() => navigate("/content-management")}
+                                >
+                                    <p className='text-[#3F434A] text-sm font-jost text-center  font-medium'>{loading ? <CgSpinner className=" animate-spin text-lg  " /> : 'Cancel'}</p>
+                                </button>
+                                <button
+                                    className="bg-ORANGE-100 mt-5 text-[#fff] rounded-lg p-3 cursor-pointer w-full h-[54px] flex flex-col items-center justify-center"
+                                    type="submit"
+                                >
+                                    <p className='text-[#fff] text-sm font-jost  text-center  font-medium'>{loading ? <CgSpinner className=" animate-spin text-lg  " /> : 'Create'}</p>
+                                </button>
 
-
-                            <button
-                                className="bg-[#1EC677] mt-5 text-[#fff] rounded-lg p-3 cursor-pointer w-full h-[54px] flex flex-col items-center justify-center"
-                                type="submit"
-                            >
-                                <p className='text-[#fff] text-sm  text-center  font-medium'>{loading ? <CgSpinner className=" animate-spin text-lg  " /> : 'Send'}</p>
-                            </button>
+                            </div>
                   
                     
                         </Form>

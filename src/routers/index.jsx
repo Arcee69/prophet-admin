@@ -21,6 +21,7 @@ import RoleManagement from '../pages/RoleManagement ';
 import BrandManagement from '../pages/BrandManagement';
 import Subscriptions from '../pages/Subscriptions';
 import AddBlog from '../pages/ContentManagement/components/Blog/AddBlog';
+import AddFaq from '../pages/ContentManagement/components/Faq/AddFaq';
 
 
 export default function Routers() {
@@ -46,6 +47,7 @@ export default function Routers() {
             <Route path='/alerts' element={<Alerts />} />
             <Route path='/content-management' element={<ContentMangement />} />
             <Route path='/add-blog' element={<AddBlog />} />
+            <Route path='/add-faq' element={<AddFaq />} />
             <Route path='/activity-logs' element={<ActivityLogs />} />
             <Route path='/transactions' element={<Transactions />} />
             <Route path='/subscriptions' element={<Subscriptions />} />

@@ -100,7 +100,7 @@ const ContentMangement = () => {
           <p className='text-DARK-300 text-[30px] font-jost leading-[38px] font-semibold'>Content Management</p>
           <p className='text-GREY-500 font-jost text-base leading-6'>Manage Brands here</p>
         </div>
-        {/* <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-4'>
           <button
             type='button'
             className='w-[160px] p-4 rounded flex items-center justify-center gap-2 cursor-pointer bg-DARK-100'
@@ -112,12 +112,12 @@ const ContentMangement = () => {
           <button
             type='button'
             className='w-[160px] p-4 rounded flex items-center justify-center gap-2 cursor-pointer bg-DARK-100'
-            onClick={() => setOpenAddFaq(true)}
+            onClick={() => navigate('/add-faq')}
           >
             <p className='text-white font-jost leading-[100%] text-[20px]'>Add Faq</p>
             <TfiArrowCircleRight className='mt-[1.5px] w-4 h-4 text-white' />
           </button>
-        </div> */}
+        </div>
       </div>
 
       <div className='w-full bg-white rounded-[15px] pb-[30px] flex flex-col gap-[15px]'>

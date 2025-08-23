@@ -8,10 +8,13 @@ import Alert from "../../assets/svg/alert.svg"
 import { AiOutlineWarning } from 'react-icons/ai'
 import { FiPlus, FiThumbsUp } from 'react-icons/fi'
 import { LuClipboardList } from 'react-icons/lu'
+import { useNavigate } from 'react-router-dom'
 
 
 const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState("Last 30 days")
+
+  const navigate = useNavigate()
 
   return (
     <div className='flex flex-col gap-[57px]'>
@@ -124,7 +127,7 @@ const Dashboard = () => {
 
         </div>
 
-        <div className='bg-white rounded-3xl flex items-start justify-between'>
+        <div className='bg-white rounded-3xl  hidden items-start justify-between'>
           <div className='py-[29px] w-full px-[25px] flex flex-col gap-[28px]'>
             <p className="text-[#6B7280] text-[18px] font-jost font-semibold">Recent Alerts</p>
             <div className="flex flex-col gap-4">
@@ -174,15 +177,15 @@ const Dashboard = () => {
             <div className="h-[294px] flex flex-col gap-4 px-6">
 
               <div className="flex flex-col gap-4">
-                <button className="flex items-center gap-4 text-sm text-[#000] font-jost border border-[#E5E7EB] px-4 py-2 rounded-[10px] bg-[#F8FAFC]">
-                  <FiPlus /> Add Brand to Track
+                <button onClick={() => navigate("/brand-management")} className="flex items-center gap-4 text-sm text-[#000] font-jost border border-[#E5E7EB] px-4 py-2 rounded-[10px] bg-[#F8FAFC]">
+                  <FiPlus /> Add Brand
                 </button>
-                <button className="flex items-center gap-4 text-sm text-[#000] font-jost border border-[#E5E7EB] px-4 py-2 rounded-[10px] bg-[#F8FAFC]">
+                {/* <button className="flex items-center gap-4 text-sm text-[#000] font-jost border border-[#E5E7EB] px-4 py-2 rounded-[10px] bg-[#F8FAFC]">
                   <LuClipboardList /> Compare Brands
                 </button>
                 <button className="flex items-center gap-4 text-sm text-[#000] font-jost border border-[#E5E7EB] px-4 py-2 rounded-[10px] bg-[#F8FAFC]">
                   <FiThumbsUp /> Brand Health Check
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
