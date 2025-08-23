@@ -39,8 +39,7 @@ const DeleteBrand = ({ handleClose, brandData, fetchBrands }) => {
                 <p className='font-jost font-bold text-base text-[#EB5757]'>Cancel</p>
             </button>
             <button onClick={submitForm} className='bg-[#F4003D] w-[140px] border-none flex items-center justify-center p-2 rounded-lg'>
-            <p className='text-[#fff] text-base  font-jost text-center  font-medium'>{loading ? <CgSpinner className=" animate-spin text-lg  " /> : ' Yes, Delete'}</p>
-                
+                <p className='text-[#fff] text-base  font-jost text-center  font-medium'>{loading ? <CgSpinner className=" animate-spin text-lg  " /> : ' Yes, Delete'}</p>
             </button>
         </div>
     </div>

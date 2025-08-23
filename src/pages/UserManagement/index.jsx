@@ -155,7 +155,7 @@ const UserManagement = () => {
                   <td className='p-4 text-sm font-jost text-DARK-500'>{user.phone}</td>
                   <td className='p-4'>
                     <span className={`${user.is_subscribed ? "bg-GREEN-50 text-GREEN-700 " : "bg-red-100 text-red-500 "} text-xs font-medium px-2.5 py-2 rounded-lg`}>
-                      {user.is_subscribed ? "Active" : "Inactive"}
+                      {user.is_subscribed ? "Active" : "Expired"}
                     </span>
                   </td>
                   <td className='p-4 text-sm font-jost text-DARK-500'>{new Date(user.created_at).toLocaleDateString()}</td>

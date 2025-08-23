@@ -44,7 +44,7 @@ const UserDetails = ({ handleClose, userData }) => {
         <div className='flex items-center gap-5'>
             <Buttons 
                 className="w-full border border-GREY-800"
-                text="Cancel"
+                text="Close"
                 action={handleClose}
                 textColor="text-GREY-300"
             />
