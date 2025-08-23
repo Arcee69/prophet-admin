@@ -36,7 +36,8 @@ const Login = () => {
         console.log(res, "best");
         if (res?.type === "user/loginUser/fulfilled") {
           setLoading(false);
-          navigate("/dashboard");
+          navigate("/user-management");
+          // navigate("/dashboard");
         } else {
           setLoading(false);
         }

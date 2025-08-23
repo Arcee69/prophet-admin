@@ -89,7 +89,7 @@ const Header = ({ toggleSidebar }) => {
                             />
                         </div>
                         <LuBell className='w-5 h-5 text-[#9CA3AF]' />
-                        <img src={Chat} alt='Chat' className='w-[25px] h-[25px]' />
+                        {/* <img src={Chat} alt='Chat' className='w-[25px] h-[25px]' /> */}
                         <div ref={logoutRef} className='relative flex items-center gap-[7px] cursor-pointer' onClick={() => setShowLogout(!showLogout)}>
                             <img src={Girl} alt='Girl' className='w-[32px] h-[32px]' />
                             <IoIosArrowDown className='w-5 h-5 text-GREY-500' />

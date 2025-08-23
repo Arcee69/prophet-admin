@@ -6,6 +6,8 @@ import loginReducer from "../features/auth/loginSlice";
 import getUsersReducer from "../features/users/getUsersSlice";
 import getAdminsReducer from "../features/admins/getAdminsSlice";
 import getBrandsReducer from "../features/brands/getBrandsSlice";
+import getBlogsReducer from "../features/blogs/getBlogsSlice";
+import getFaqsReducer from "../features/faqs/getFaqsSlice";
 
 const persistConfig = {
     key: 'root',
@@ -17,7 +19,9 @@ const rootReducer = combineReducers({
     userLogin: loginReducer,
     allUsers: getUsersReducer,
     allAdmins: getAdminsReducer,
-    allBrands: getBrandsReducer
+    allBrands: getBrandsReducer,
+    allBlogs: getBlogsReducer,
+    allFaqs: getFaqsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

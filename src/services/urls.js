@@ -11,5 +11,11 @@ export const appUrls = {
     USERS_URL: "/v1/user",
 
     //BRANDS ENDPOINTS
-    BRANDS_URL: "/v1/brand"
+    BRANDS_URL: "/v1/brand",
+
+    //BLOGS ENDPOINT
+    BLOGS_URL: "/v1/post",
+
+    // FAQ ENDPOINT
+    FAQ_URL: "/v1/faq"
 };
