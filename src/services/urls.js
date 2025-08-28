@@ -17,5 +17,8 @@ export const appUrls = {
     BLOGS_URL: "/v1/post",
 
     // FAQ ENDPOINT
-    FAQ_URL: "/v1/faq"
+    FAQ_URL: "/v1/faq",
+
+    //SUBSCRIPTION SETTINGS ENDPOINT
+    SUBSCRIPTION_SETTINGS_URL: "/v1/subscription-plans"
 };

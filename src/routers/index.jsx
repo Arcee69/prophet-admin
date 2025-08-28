@@ -16,12 +16,12 @@ import Alerts from '../pages/Alerts';
 import ContentMangement from '../pages/ContentManagement';
 import ActivityLogs from '../pages/ActivityLogs';
 import Transactions from '../pages/Transactions';
-import Settings from '../pages/Settings';
 import RoleManagement from '../pages/RoleManagement ';
 import BrandManagement from '../pages/BrandManagement';
 import Subscriptions from '../pages/Subscriptions';
 import AddBlog from '../pages/ContentManagement/components/Blog/AddBlog';
 import AddFaq from '../pages/ContentManagement/components/Faq/AddFaq';
+import SubSettings from '../pages/SubSettings';
 
 
 export default function Routers() {
@@ -51,7 +51,7 @@ export default function Routers() {
             <Route path='/activity-logs' element={<ActivityLogs />} />
             <Route path='/transactions' element={<Transactions />} />
             <Route path='/subscriptions' element={<Subscriptions />} />
-            <Route path='/pricing-settings' element={<Settings />} />
+            <Route path='/pricing-settings' element={<SubSettings />} />
         </Route>
 
     

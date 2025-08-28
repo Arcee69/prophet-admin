@@ -8,6 +8,7 @@ import getAdminsReducer from "../features/admins/getAdminsSlice";
 import getBrandsReducer from "../features/brands/getBrandsSlice";
 import getBlogsReducer from "../features/blogs/getBlogsSlice";
 import getFaqsReducer from "../features/faqs/getFaqsSlice";
+import getSubSettingsReducer from "../features/subSettings/getSubSettingsSlice";
 
 const persistConfig = {
     key: 'root',
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
     allAdmins: getAdminsReducer,
     allBrands: getBrandsReducer,
     allBlogs: getBlogsReducer,
-    allFaqs: getFaqsReducer
+    allFaqs: getFaqsReducer,
+    allSubSettings: getSubSettingsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
