@@ -37,7 +37,7 @@ const AddNewBrand = ({ handleClose, fetchBrands }) => {
         <img src={Chart} alt='Chart' className='w-[48px] h-[48px]' />
         <div className='flex flex-col gap-2'>
             <p className='font-jost text-DARK-300 text-[18px] font-medium leading-7'>New Brand</p>
-            <p className='font-jost text-GREY-200 leading-5 text-sm'>Add a new brand(s) here</p>
+            <p className='font-jost text-GREY-200 leading-5 text-sm'>Add a new brand here</p>
         </div>
         <div className='flex gap-5 flex-col'>
             <div className='flex flex-col gap-[5px]'>
