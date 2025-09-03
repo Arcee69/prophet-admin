@@ -16,21 +16,21 @@ const TransactionDetails = ({ handleClose, transactionData }) => {
             <div className='flex items-center justify-between'>
                 <div className='flex flex-col gap-[5px]'>
                     <p className='font-jost text-base leading-[100%] font-medium text-NEUTRAL-500'>ID</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{transactionData.id?.slice(0, 8)}</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{transactionData.id?.slice(0, 10)}</p>
                 </div>
                 <div className='flex flex-col gap-[5px]'>
                     <p className='font-jost text-base leading-[100%] font-medium text-NEUTRAL-500'>Payment Reference</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{transactionData.id}</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{transactionData.tx_ref.slice(0, 10)}</p>
                 </div>
             </div>
             <div className='flex items-center justify-between'>
                 <div className='flex flex-col gap-[5px]'>
                     <p className='font-jost text-base leading-[100%] font-medium text-NEUTRAL-500'>Name</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{transactionData.name}</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{transactionData.user.name}</p>
                 </div>
                 <div className='flex flex-col w-[133px] gap-[5px]'>
                     <p className='font-jost text-base leading-[100%] font-medium text-NEUTRAL-500'>Email</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{transactionData.email}</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{transactionData.user.email}</p>
                 </div>
             </div>
             <div className='flex items-center justify-between'>
@@ -39,7 +39,7 @@ const TransactionDetails = ({ handleClose, transactionData }) => {
                     <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{transactionData.amount}</p>
                 </div>
                 <div className='flex flex-col w-[133px] gap-[5px]'>
-                    <p className='font-jost text-base font-medium leading-[100%] text-NEUTRAL-500'>Subscription Plan</p>
+                    <p className='font-jost text-base font-medium leading-[100%] text-NEUTRAL-500'>Purpose</p>
                     <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{transactionData.plan}</p>
                 </div>
             </div>
@@ -50,7 +50,7 @@ const TransactionDetails = ({ handleClose, transactionData }) => {
                 </div>
                 <div className='flex flex-col w-[133px] gap-[5px]'>
                     <p className='font-jost text-base font-medium leading-[100%] text-NEUTRAL-500'>Date Added</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{transactionData.created_at}</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{new Date(transactionData.created_at).toLocaleDateString()}</p>
                 </div>
             </div>
         </div>

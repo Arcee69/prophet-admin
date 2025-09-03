@@ -3,6 +3,7 @@ import { IoIosArrowDown } from 'react-icons/io'
 import { IoSearch } from 'react-icons/io5'
 import { TfiArrowCircleRight } from 'react-icons/tfi'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6'
+import * as XLSX from "xlsx"
 
 import Kebab from "../../assets/svg/kebab.svg"
 import SideModal from '../../components/sideModal'
@@ -12,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { BiExport } from 'react-icons/bi'
 import SubscriptionDetails from './components/SubscriptionDetails'
+import { fetchSubscriptions } from '../../features/subscriptions/getSubscriptionSlice'
 
 
 
@@ -29,8 +31,14 @@ const Subscriptions = () => {
   const dispatch = useDispatch()
 
   // useEffect(() => {
-  //   dispatch(fetchUsers(currentPage))
+  //   dispatch(fetchUsers (currentPage))
   // }, [dispatch, currentPage])
+
+  useEffect(() => {
+    dispatch(fetchSubscriptions(currentPage))
+  }, [dispatch, currentPage])
+
+
 
 
   const transactions = [
@@ -66,14 +74,14 @@ const Subscriptions = () => {
     },
   ]
 
-  const { loading, pagination } = useSelector((state) => state.allUsers)
-  // console.log(users, "data")
+  const {subscriptions, loading, pagination } = useSelector((state) => state.allSubscriptions)
+  console.log(subscriptions, "subscriptions")
 
 
   // Filter users based on search, status, and category
-  const filteredTransactions = transactions?.filter(sub =>
-    sub.name.toLowerCase().includes(search.toLowerCase()) &&
-    (status === "" || sub.status === status) &&
+  const filteredTransactions = subscriptions.data?.filter(sub =>
+    sub.user_id.toLowerCase().includes(search.toLowerCase()) &&
+    (status === "" || sub.is_active === status) &&
     (category === "" || category === "All")
   )
 
@@ -95,6 +103,14 @@ const Subscriptions = () => {
   setCurrentPage(1)
 }, [search, status, category])
 
+
+  const exportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(subscriptions.data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Subscriptions');
+    XLSX.writeFile(workbook, `subscriptions_${Date.now()}.xlsx`);
+  };
+
   return (
     <div className='flex flex-col gap-[57px]'>
       <div className='flex items-center justify-between'>
@@ -105,7 +121,7 @@ const Subscriptions = () => {
         <button
           type='button'
           className='w-[160px] p-4 rounded flex items-center justify-center gap-2 cursor-pointer bg-DARK-100'
-          // onClick={() => setOpenAddNewModal(true)}
+          onClick={exportExcel}
         >
           <p className='text-white font-jost leading-[100%] text-[20px]'>Export</p>
           <BiExport className='mt-[1.5px] w-5 h-5 text-white' />
@@ -187,16 +203,16 @@ const Subscriptions = () => {
                   <td className='p-4'><input type='checkbox' /></td>
                   <td className='p-4'>
                     <div className='flex flex-col gap-1'>
-                      <p className='text-sm font-jost text-DARK-500'>{sub.name}</p>
+                      <p className='text-sm font-jost text-DARK-500'>{sub.user_id.slice(0, 10)}</p>
                       <p className='text-[10px] font-jost text-DARK-500'>{sub.email}</p>
                     </div> 
                   </td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{sub.plan}</td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{sub.amount}</td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{sub.created_at}</td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{sub.end_at}</td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{sub.subscription_plan.name}</td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{sub.type === 'monthly' ? sub.monthly_amount : sub.annual_amount}</td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{sub.start_date}</td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{sub.end_date}</td>
                   <td className='p-4'>
-                    <span className={`${sub.status ? "bg-GREEN-50 text-GREEN-700" : "bg-red-100 text-red-500 "} text-xs font-medium px-2.5 py-2 rounded-lg`}>{sub.status  ? "Active" : "Expired"}</span>
+                    <span className={`${sub.is_active ? "bg-GREEN-50 text-GREEN-700" : "bg-red-100 text-red-500 "} text-xs font-medium px-2.5 py-2 rounded-lg`}>{sub.status  ? "Active" : "Expired"}</span>
                   </td>
                   <td className='p-4'>
                     <div className='flex relative'>
@@ -226,7 +242,7 @@ const Subscriptions = () => {
               )) : (
                 <tr>
                   <td colSpan="7" className='p-4 text-center text-GREY-200 font-jost'>
-                    No Transaction Found
+                    No Subscription Found
                   </td>
                 </tr>
               )}

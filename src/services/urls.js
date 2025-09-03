@@ -15,10 +15,14 @@ export const appUrls = {
 
     //BLOGS ENDPOINT
     BLOGS_URL: "/v1/post",
+   
+    //TRANSACTIONS ENDPOINT
+    TRANSACTIONS_URL: "/v1/transactions",
 
     // FAQ ENDPOINT
     FAQ_URL: "/v1/faq",
 
-    //SUBSCRIPTION SETTINGS ENDPOINT
-    SUBSCRIPTION_SETTINGS_URL: "/v1/subscription-plans"
+    //SUBSCRIPTION ENDPOINT
+    SUBSCRIPTION_SETTINGS_URL: "/v1/subscription-plans",
+    SUBSCRIPTION_URL: "/v1/subscriptions"
 };

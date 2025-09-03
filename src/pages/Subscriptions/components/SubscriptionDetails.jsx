@@ -16,37 +16,37 @@ const SubscriptionDetails = ({ handleClose, subscriptionData }) => {
             <div className='flex items-center justify-between'>
                 <div className='flex flex-col gap-[5px]'>
                     <p className='font-jost text-base leading-[100%] font-medium text-NEUTRAL-500'>Name</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.name}</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.name || "N/A"}</p>
                 </div>
                 <div className='flex flex-col w-[133px] gap-[5px]'>
                     <p className='font-jost text-base leading-[100%] font-medium text-NEUTRAL-500'>Email</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.email}</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.email || "N/A"}</p>
                 </div>
             </div>
             <div className='flex items-center justify-between'>
                 <div className='flex flex-col gap-[5px]'>
                     <p className='font-jost text-base font-medium leading-[100%] text-NEUTRAL-500'>Amount Paid</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.amount}</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.type === 'monthly' ? subscriptionData.monthly_amount : subscriptionData.annual_amount}</p>
                 </div>
                 <div className='flex flex-col w-[133px] gap-[5px]'>
                     <p className='font-jost text-base font-medium leading-[100%] text-NEUTRAL-500'>Subscription Plan</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.plan}</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.subscription_plan.name}</p>
                 </div>
             </div>
             <div className='flex items-center justify-between'>
                 <div className='flex flex-col w-[133px] gap-[5px]'>
                     <p className='font-jost text-base font-medium leading-[100%] text-NEUTRAL-500'>Billing Cycle</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>Annually</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.type}</p>
                 </div>
                 <div className='flex flex-col w-[133px] gap-[5px]'>
                     <p className='font-jost text-base font-medium leading-[100%] text-NEUTRAL-500'>Start Date</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.created_at}</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.start_date}</p>
                 </div>
             </div>
              <div className='flex items-center gap-5'>
                 <div className='flex flex-col w-[133px] gap-[5px]'>
                     <p className='font-jost text-base leading-[100%] text-NEUTRAL-500'>End Date</p>
-                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.end_at}</p>
+                    <p className='font-jost text-DARK-600 text-sm leading-[21px]'>{subscriptionData.end_date}</p>
                 </div>
             </div>
         </div>

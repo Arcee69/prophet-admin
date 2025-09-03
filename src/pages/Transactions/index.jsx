@@ -3,6 +3,7 @@ import { IoIosArrowDown } from 'react-icons/io'
 import { IoSearch } from 'react-icons/io5'
 import { TfiArrowCircleRight } from 'react-icons/tfi'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6'
+import * as XLSX from "xlsx"
 
 import Kebab from "../../assets/svg/kebab.svg"
 import SideModal from '../../components/sideModal'
@@ -12,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { BiExport } from 'react-icons/bi'
 import TransactionsDetails from './components/TransactionsDetails'
+import { fetchTransactions } from '../../features/transactions/getTransactionSlice'
 
 
 const Transactions = () => {
@@ -31,38 +33,42 @@ const Transactions = () => {
   //   dispatch(fetchUsers(currentPage))
   // }, [dispatch, currentPage])
 
+  useEffect(() => {
+    dispatch(fetchTransactions(currentPage))
+  }, [dispatch, currentPage])
 
-  const transactions = [
-    {
-      id: "234567AD",
-      name: "Shalewa Oguntoyinbo",
-      email: "Shaguntyimb@ymail.com",
-      plan: "Custom",
-      amount: "20,000",
-      created_at: "21/12/2022",
-      status: true
-    },
-    {
-      id: "234567AD",
-      name: "Shalewa Oguntoyinbo",
-      email: "Shaguntyimb@ymail.com",
-      plan: "Basic",
-      amount: "10,000",
-      created_at: "21/12/2022",
-      status: true
-    },
-    {
-      id: "234567AD",
-      name: "Shalewa Oguntoyinbo",
-      email: "Shaguntyimb@ymail.com",
-      plan: "Premium",
-      amount: "100,000",
-      created_at: "21/12/2022",
-      status: true
-    },
-  ]
 
-  const { loading, pagination } = useSelector((state) => state.allUsers)
+  // const transactions = [
+  //   {
+  //     id: "234567AD",
+  //     name: "Shalewa Oguntoyinbo",
+  //     email: "Shaguntyimb@ymail.com",
+  //     plan: "Custom",
+  //     amount: "20,000",
+  //     created_at: "21/12/2022",
+  //     status: true
+  //   },
+  //   {
+  //     id: "234567AD",
+  //     name: "Shalewa Oguntoyinbo",
+  //     email: "Shaguntyimb@ymail.com",
+  //     plan: "Basic",
+  //     amount: "10,000",
+  //     created_at: "21/12/2022",
+  //     status: true
+  //   },
+  //   {
+  //     id: "234567AD",
+  //     name: "Shalewa Oguntoyinbo",
+  //     email: "Shaguntyimb@ymail.com",
+  //     plan: "Premium",
+  //     amount: "100,000",
+  //     created_at: "21/12/2022",
+  //     status: true
+  //   },
+  // ]
+
+  const {transactions, loading, pagination } = useSelector((state) => state.allUsers)
   // console.log(users, "data")
 
 
@@ -91,6 +97,13 @@ const Transactions = () => {
   setCurrentPage(1)
 }, [search, status, category])
 
+  const exportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(transactions);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Transactions');
+    XLSX.writeFile(workbook, `transactions_${Date.now()}.xlsx`);
+  };
+
   return (
     <div className='flex flex-col gap-[57px]'>
       <div className='flex items-center justify-between'>
@@ -101,7 +114,7 @@ const Transactions = () => {
         <button
           type='button'
           className='w-[160px] p-4 rounded flex items-center justify-center gap-2 cursor-pointer bg-DARK-100'
-          // onClick={() => setOpenAddNewModal(true)}
+          onClick={exportExcel}
         >
           <p className='text-white font-jost leading-[100%] text-[20px]'>Export</p>
           <BiExport className='mt-[1.5px] w-5 h-5 text-white' />
@@ -164,7 +177,7 @@ const Transactions = () => {
                 <th className='p-4 text-left'><input type='checkbox' /></th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Transaction ID</th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>User ID + Email</th>
-                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Subscription Plan</th>
+                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Purpose</th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Amount Paid</th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Date Created</th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Status</th>
@@ -181,18 +194,18 @@ const Transactions = () => {
               ) : filteredTransactions?.length > 0 ? filteredTransactions?.map((txn, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-GREY-50'}>
                   <td className='p-4'><input type='checkbox' /></td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{txn.id}</td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{txn.id.slice(0, 10)}</td>
                   <td className='p-4'>
                     <div className='flex flex-col gap-1'>
-                      <p className='text-sm font-jost text-DARK-500'>{txn.name}</p>
-                      <p className='text-[10px] font-jost text-DARK-500'>{txn.email}</p>
+                      <p className='text-sm font-jost text-DARK-500'>{txn.user.name}</p>
+                      <p className='text-[10px] font-jost text-DARK-500'>{txn.user.email}</p>
                     </div> 
                   </td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{txn.plan}</td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{txn.purpose}</td>
                   <td className='p-4 text-sm font-jost text-DARK-500'>{txn.amount}</td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{txn.created_at}</td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{new Date(txn.created_at).toLocaleDateString()}</td>
                   <td className='p-4'>
-                    <span className={`${txn.status ? "bg-GREEN-50 text-GREEN-700" : "bg-red-100 text-red-500 "} text-xs font-medium px-2.5 py-2 rounded-lg`}>{txn.status  ? "Successful" : "Failed"}</span>
+                    <span className={`${txn.status === "success" ? "bg-GREEN-50 text-GREEN-700" : "bg-red-100 text-red-500 "} text-xs font-medium px-2.5 py-2 rounded-lg`}>{txn.status  ? "Successful" : "Failed"}</span>
                   </td>
                   <td className='p-4'>
                     <div className='flex relative'>
