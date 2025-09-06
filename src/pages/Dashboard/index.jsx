@@ -127,7 +127,7 @@ const Dashboard = () => {
 
         </div>
 
-        <div className='bg-white rounded-3xl  hidden items-start justify-between'>
+        <div className='bg-white rounded-3xl flex items-start justify-between'>
           <div className='py-[29px] w-full px-[25px] flex flex-col gap-[28px]'>
             <p className="text-[#6B7280] text-[18px] font-jost font-semibold">Recent Alerts</p>
             <div className="flex flex-col gap-4">

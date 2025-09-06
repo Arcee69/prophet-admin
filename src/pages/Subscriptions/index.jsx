@@ -9,7 +9,6 @@ import Kebab from "../../assets/svg/kebab.svg"
 import SideModal from '../../components/sideModal'
 
 import { useDispatch, useSelector } from 'react-redux'
-// import { fetchUsers } from '../../features/users/getUsersSlice'
 
 import { BiExport } from 'react-icons/bi'
 import SubscriptionDetails from './components/SubscriptionDetails'
@@ -39,40 +38,6 @@ const Subscriptions = () => {
   }, [dispatch, currentPage])
 
 
-
-
-  const transactions = [
-    {
-      id: "234567AD",
-      name: "Shalewa Oguntoyinbo",
-      email: "Shaguntyimb@ymail.com",
-      plan: "Custom",
-      amount: "20,000",
-      created_at: "21/12/2022",
-      end_at: "21/12/2022",
-      status: true
-    },
-    {
-      id: "234567AD",
-      name: "Shalewa Oguntoyinbo",
-      email: "Shaguntyimb@ymail.com",
-      plan: "Basic",
-      amount: "10,000",
-      created_at: "21/12/2022",
-      end_at: "21/12/2022",
-      status: true
-    },
-    {
-      id: "234567AD",
-      name: "Shalewa Oguntoyinbo",
-      email: "Shaguntyimb@ymail.com",
-      plan: "Premium",
-      amount: "100,000",
-      created_at: "21/12/2022",
-      end_at: "21/12/2022",
-      status: true
-    },
-  ]
 
   const {subscriptions, loading, pagination } = useSelector((state) => state.allSubscriptions)
   console.log(subscriptions, "subscriptions")

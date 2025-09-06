@@ -3,16 +3,15 @@ import { CustomToolbar } from './CustomToolbar'
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import { Form, Formik } from 'formik';
-import { MdClose } from 'react-icons/md';
 import * as Yup from 'yup'
 import { toast } from 'react-toastify';
+import { CgSpinner } from 'react-icons/cg';
+import { useNavigate } from 'react-router-dom';
 
 import Upload from "../../../../assets/svg/uploadIcon.svg"
 
 import { api } from '../../../../services/api';
 import { appUrls } from '../../../../services/urls';
-import { CgSpinner } from 'react-icons/cg';
-import { useNavigate } from 'react-router-dom';
 
 const AddBlog = () => {
     const [loading, setLoading] = useState(false)
@@ -43,6 +42,7 @@ const AddBlog = () => {
                 })
                 setLoading(false)
                 actions.resetForm()
+                navigate('/content-management')
             })
             .catch((err) => {
                 console.log(err, "soso")
@@ -66,7 +66,7 @@ const AddBlog = () => {
                     initialValues={{
                         title: "",
                         description: "",
-                        category: "",
+                        // category: "",
                     }}
                     validationSchema={formValidationSchema}
                     onSubmit={(values, action) => {
@@ -163,7 +163,7 @@ const AddBlog = () => {
                                     type="button"
                                     onClick={() => navigate("/content-management")}
                                 >
-                                    <p className='text-[#3F434A] text-sm font-jost text-center  font-medium'>{loading ? <CgSpinner className=" animate-spin text-lg  " /> : 'Cancel'}</p>
+                                    <p className='text-[#3F434A] text-sm font-jost text-center  font-medium'>Cancel</p>
                                 </button>
                                 <button
                                     className="bg-ORANGE-100 mt-5 text-[#fff] rounded-lg p-3 cursor-pointer w-full h-[54px] flex flex-col items-center justify-center"

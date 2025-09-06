@@ -7,9 +7,10 @@ import { toast } from 'react-toastify';
 import { api } from '../../../../services/api';
 import { appUrls } from '../../../../services/urls';
 import { CgSpinner } from 'react-icons/cg';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const AddFaq = () => {
+
+const EditFaq = () => {
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
@@ -19,15 +20,17 @@ const AddFaq = () => {
         answer: Yup.mixed().required("Answer is Required")
     });
 
+    const { state } =  useLocation()
+
     const submitForm = async (values, actions) => {
         setLoading(true)
         const data = {
             "question": values.question,
             "answer": values.answer
         }
-        await api.post(appUrls?.FAQ_URL, data)
+        await api.put(appUrls?.FAQ_URL + `/${state.id}`, data)
             .then((res) => {
-                toast("Faq created Successfully", {
+                toast("Faq updated Successfully", {
                     position: "top-right",
                     autoClose: 5000,
                     closeOnClick: true,
@@ -52,12 +55,12 @@ const AddFaq = () => {
 
     return (
         <div className='flex flex-col gap-5'>
-            <p className='font-lato text-[20px] text-GREY-1150'>Create Faq</p>
+            <p className='font-lato text-[20px] text-GREY-1150'>Edit Faq</p>
             <div className='w-full'>
                 <Formik
                     initialValues={{
-                        question: "",
-                        answer: "",
+                        question: state.question || "",
+                        answer: state.answer || "",
                         // category: "",
                     }}
                     validationSchema={formValidationSchema}
@@ -125,7 +128,7 @@ const AddFaq = () => {
                                     className="bg-ORANGE-100 mt-5 text-[#fff] rounded-lg p-3 cursor-pointer w-full h-[54px] flex flex-col items-center justify-center"
                                     type="submit"
                                 >
-                                    <p className='text-[#fff] text-sm font-jost  text-center  font-medium'>{loading ? <CgSpinner className=" animate-spin text-lg  " /> : 'Create'}</p>
+                                    <p className='text-[#fff] text-sm font-jost  text-center  font-medium'>{loading ? <CgSpinner className=" animate-spin text-lg  " /> : 'Update'}</p>
                                 </button>
 
                             </div>
@@ -140,4 +143,4 @@ const AddFaq = () => {
     )
 }
 
-export default AddFaq
+export default EditFaq

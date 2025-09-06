@@ -7,11 +7,10 @@ import Faqs from './components/Faq'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchBlogs } from '../../features/blogs/getBlogsSlice'
 import { useNavigate } from 'react-router-dom'
+import { fetchFaqs } from '../../features/faqs/getFaqsSlice'
 
 const ContentMangement = () => {
   const [activeTab, setActiveTab] = useState("Blogs")
-  const [openAddBlog, setOpenAddBlog] = useState(false)
-  const [openAddFaq, setOpenAddFaq] = useState(false)
   const [search, setSearch] = useState("")
   const [status, setStatus] = useState("")
   const [category, setCategory] = useState("")
@@ -37,7 +36,7 @@ const ContentMangement = () => {
 
   // Filter users based on search, status, and category
   const filteredPost = blogs.data?.filter(blog => 
-    blog.name.toLowerCase().includes(search.toLowerCase()) &&
+    blog.title.toLowerCase().includes(search.toLowerCase()) &&
     (status === "" || blog.status === status) &&
     (category === "" || category === "All")
   )
@@ -62,8 +61,8 @@ const ContentMangement = () => {
 
   //Faqs
   useEffect(() => {
-    dispatch(fetchBlogs(blogCurrentPage))
-  }, [dispatch, blogCurrentPage])
+    dispatch(fetchFaqs(faqCurrentPage))
+  }, [dispatch, faqCurrentPage])
 
   const faqData = useSelector((state) => state.allFaqs)
   console.log(faqData, "faqData")
@@ -161,7 +160,7 @@ const ContentMangement = () => {
               <IoIosArrowDown className='w-4 h-4 text-GREY-200' />
             </div>
           </div>
-          <div className='flex flex-col gap-1.5'>
+          {/* <div className='flex flex-col gap-1.5'>
             <p className='text-GREY-300 font-jost text-sm'>Types</p>
             <div className='w-[192px] lg:flex justify-between items-center border p-2 border-[#E4E7EC] bg-[#fff] rounded-lg h-[36px]'>
               <select
@@ -174,7 +173,7 @@ const ContentMangement = () => {
               </select>
               <IoIosArrowDown className='w-4 h-4 text-GREY-200' />
             </div>
-          </div>
+          </div> */}
         </div>
 
         {activeTab === "Blogs" && 
@@ -198,8 +197,6 @@ const ContentMangement = () => {
             faqCurrentPage={faqCurrentPage}
           />
         }
-
-
       </div>
 
     </div>
