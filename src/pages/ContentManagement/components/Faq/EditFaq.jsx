@@ -138,7 +138,7 @@ const EditFaq = () => {
                     )}
             </Formik>
         </div>
-        </div >
+        </div>
      
     )
 }
