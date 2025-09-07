@@ -7,14 +7,58 @@ import Pie from "../../assets/svg/pie.svg"
 import Alert from "../../assets/svg/alert.svg"
 import { AiOutlineWarning } from 'react-icons/ai'
 import { FiPlus, FiThumbsUp } from 'react-icons/fi'
-import { LuClipboardList } from 'react-icons/lu'
+import { LuClipboardList, LuCreditCard } from 'react-icons/lu'
 import { useNavigate } from 'react-router-dom'
+import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { MdOutlineTrendingUp } from 'react-icons/md'
+import { GoStop } from 'react-icons/go'
 
 
 const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState("Last 30 days")
 
   const navigate = useNavigate()
+
+  // Bar Chart Data
+  const channelData = [
+      { name: 'Monthly', subscription: 1200 },
+      { name: 'Quarterly', subscription: 800 },
+      { name: 'Annual', subscription: 600},
+      { name: 'Enterprise', subscription: 400 },
+  ];
+
+  const data = [
+  {
+    name: 'Jan',
+    Transactions: 2400,
+    amt: 2400,
+  },
+  {
+    name: 'Feb',
+    Transactions: 1398,
+    amt: 2210,
+  },
+  {
+    name: 'Mar',
+    Transactions: 9800,
+    amt: 2290,
+  },
+  {
+    name: 'Apr',
+    Transactions: 3908,
+    amt: 2000,
+  },
+  {
+    name: 'May',
+    Transactions: 4800,
+    amt: 2181,
+  },
+  {
+    name: 'Jun',
+    Transactions: 3800,
+    amt: 2500,
+  },
+];
 
   return (
     <div className='flex flex-col gap-[57px]'>
@@ -127,8 +171,53 @@ const Dashboard = () => {
 
         </div>
 
-        <div className='bg-white rounded-3xl flex items-start justify-between'>
-          <div className='py-[29px] w-full px-[25px] flex flex-col gap-[28px]'>
+        <div className='flex items-start gap-5'>
+          <div className='bg-white h-[350px] flex flex-col gap-5 w-full rounded-3xl p-5'>
+            <div className='flex items-center gap-4'>
+              <MdOutlineTrendingUp className='w-5 h-5 text-[#E78020]'/>
+              <p className='font-jost font-semibold text-[#6B7280] text-[18px] leading-6'>Transactions Trend</p>
+            </div>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                width={500}
+                height={300}
+                data={data}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="Transactions" stroke="#E78020" activeDot={{ r: 8 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="w-full h-[350px] bg-white flex flex-col gap-5 rounded-3xl p-5">
+            <div className='flex items-center gap-4'>
+              <LuCreditCard className='w-5 h-5 text-[#E78020]'/>
+              <p className='font-jost font-semibold text-[#6B7280] text-[18px] leading-6'>Subscription Distribution</p>
+            </div>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={channelData} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="subscription" fill="#BDDAFF" name="Subscription" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div className='flex items-start gap-5'>
+          <div className='py-[29px] bg-white rounded-3xl  w-full px-[25px] h-[350px] flex flex-col gap-[28px]'>
             <p className="text-[#6B7280] text-[18px] font-jost font-semibold">Recent Alerts</p>
             <div className="flex flex-col gap-4">
               {[
@@ -169,12 +258,12 @@ const Dashboard = () => {
             </div>
           </div>
           
-          <div className='py-[29px] w-full px-[25px] flex flex-col gap-[28px]'>
+          <div className='py-[29px] bg-white rounded-3xl w-full px-[25px] h-[350px] flex flex-col gap-[28px]'>
             <p className='font-jost font-semibold text-[18px]  text-[#6B7280]'>
               Quick Actions
             </p>
 
-            <div className="h-[294px] flex flex-col gap-4 px-6">
+            <div className="flex flex-col  gap-4 px-6">
 
               <div className="flex flex-col gap-4">
                 <button onClick={() => navigate("/brand-management")} className="flex items-center gap-4 text-sm text-[#000] font-jost border border-[#E5E7EB] px-4 py-2 rounded-[10px] bg-[#F8FAFC]">
@@ -186,6 +275,82 @@ const Dashboard = () => {
                 <button className="flex items-center gap-4 text-sm text-[#000] font-jost border border-[#E5E7EB] px-4 py-2 rounded-[10px] bg-[#F8FAFC]">
                   <FiThumbsUp /> Brand Health Check
                 </button> */}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* <div className='bg-white rounded-3xl flex flex-col gap-6 w-full p-5'>
+          <div className='flex items-center gap-4'>
+            <GoStop className='w-5 h-5 text-[#E78020]' />
+            <p className='font-jost font-semibold text-[#6B7280] text-[18px] leading-6'>Pending Brand Requests</p>
+          </div>
+          
+        </div> */}
+
+        <div className='bg-white rounded-3xl flex flex-col gap-6 w-full p-5'>
+          <div className='flex items-center gap-4'>
+            <GoStop className='w-5 h-5 text-[#E78020]' />
+            <p className='font-jost font-semibold text-[#6B7280] text-[18px] leading-6'>Pending Brand Requests</p>
+          </div>
+          
+          <div className="flex flex-col">
+            <div className="grid grid-cols-4 bg-[#F1F3F9] px-4 py-2 font-jost text-[#667185] text-sm">
+              <p>Name</p>
+              <p>Requested By</p>
+              <p>Date Created</p>
+              <p></p>
+            </div>
+            <div className="grid grid-cols-4 px-4 py-3 border-b border-gray-200 items-center">
+              <p className="text-[#101928] font-jost text-sm">Cocacola</p>
+              <p className="text-[#101928] font-jost text-sm">Admin</p>
+              <p className="text-[#101928] font-jost text-sm">21/12/2022</p>
+              <div className="flex gap-2">
+                <button className="bg-green-100 text-green-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
+                  ✓ Accept
+                </button>
+                <button className="bg-red-100 text-red-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
+                  ✕ Reject
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 px-4 py-3 border-b border-gray-200 items-center">
+              <p className="text-[#101928] font-jost text-sm">Samsung PLC</p>
+              <p className="text-[#101928] font-jost text-sm">System</p>
+              <p className="text-[#101928] font-jost text-sm">21/12/2022</p>
+              <div className="flex gap-2">
+                <button className="bg-green-100 text-green-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
+                  ✓ Accept
+                </button>
+                <button className="bg-red-100 text-red-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
+                  ✕ Reject
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 px-4 py-3 border-b border-gray-200 items-center">
+              <p className="text-[#101928] font-jost text-sm">Samsung PLC</p>
+              <p className="text-[#101928] font-jost text-sm">Super Admin</p>
+              <p className="text-[#101928] font-jost text-sm">21/12/2022</p>
+              <div className="flex gap-2">
+                <button className="bg-green-100 text-green-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
+                  ✓ Accept
+                </button>
+                <button className="bg-red-100 text-red-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
+                  ✕ Reject
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 px-4 py-3 items-center">
+              <p className="text-[#101928] font-jost text-sm">Samsung PLC</p>
+              <p className="text-[#101928] font-jost text-sm">Text</p>
+              <p className="text-[#101928] font-jost text-sm">21/12/2022</p>
+              <div className="flex gap-2">
+                <button className="bg-green-100 text-green-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
+                  ✓ Accept
+                </button>
+                <button className="bg-red-100 text-red-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
+                  ✕ Reject
+                </button>
               </div>
             </div>
           </div>
