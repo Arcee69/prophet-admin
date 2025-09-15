@@ -24,6 +24,7 @@ import AddFaq from '../pages/ContentManagement/components/Faq/AddFaq';
 import SubSettings from '../pages/SubSettings';
 import EditFaq from '../pages/ContentManagement/components/Faq/EditFaq';
 import EditBlog from '../pages/ContentManagement/components/Blog/EditBlog';
+import OneTimePayment from '../pages/OneTimePayment';
 
 
 export default function Routers() {
@@ -55,6 +56,7 @@ export default function Routers() {
           <Route path='/transactions' element={<Transactions />} />
           <Route path='/subscriptions' element={<Subscriptions />} />
           <Route path='/pricing-settings' element={<SubSettings />} />
+          <Route path='/one-time-payment' element={<OneTimePayment />} />
         </Route>
 
     

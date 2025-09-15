@@ -11,6 +11,7 @@ import getFaqsReducer from "../features/faqs/getFaqsSlice";
 import getSubSettingsReducer from "../features/subSettings/getSubSettingsSlice";
 import getTransactionReducer from "../features/transactions/getTransactionSlice";
 import getSubscriptionReducer from "../features/subscriptions/getSubscriptionSlice";
+import getOneTimePaymentReducer from "../features/oneTimePayment/getOneTimePaymentSlice";
 
 const persistConfig = {
     key: 'root',
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
     allFaqs: getFaqsReducer,
     allSubSettings: getSubSettingsReducer,
     allTransactions: getTransactionReducer,
-    allSubscriptions: getSubscriptionReducer
+    allSubscriptions: getSubscriptionReducer,
+    allOneTimePayment: getOneTimePaymentReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import {  useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 
-import Logo from "../../assets/svg/logo_black.svg"
+import Logo from "../../assets/png/logo.png"
 
 import { loginUser } from '../../features/auth/loginSlice';
 
@@ -49,7 +49,7 @@ const Login = () => {
   return (
     <div className='flex flex-col gap-[100px] w-full'>
       <div className='w-full p-[32px]'>
-        <img src={Logo} alt='Logo' className='' />
+        <img src={Logo} alt='Logo' className=' w-[30%] h-[30%]' />
       </div>
 
       <div className='flex flex-col  gap-8 w-[360px] mx-auto'>

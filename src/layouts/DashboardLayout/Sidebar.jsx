@@ -8,7 +8,7 @@ import { AiOutlineGift } from 'react-icons/ai'
 
 import { logout } from '../../features/auth/loginSlice'
 
-import LogoBlack from "../../assets/svg/logo_black_big.svg"
+import LogoBlack from "../../assets/png/logo.png"
 
 const Sidebar = ({ closeSidebar }) => {
 
@@ -30,7 +30,7 @@ const Sidebar = ({ closeSidebar }) => {
   return (
     <div className='bg-[#FFFFFF] border w-full flex flex-col  py-[18px] px-[14px] h-full border-l-0 overflow-y-auto overflow-x-hidden border-t-0 border-r-[#E5E5EA]'>
         <div className={`lg:flex hidden flex-col  gap-1`}>
-            <img src={LogoBlack} alt='LogoBlack' className='w-[132px] h-[57.14px]' />
+            <img src={LogoBlack} alt='LogoBlack' className='w-[132px]' /> {/* h-[57.14px] */}
         </div>
 
         <div className={`mt-[80px] lg:mt-[43px] flex flex-col gap-2.5 h-screen relative`}>
@@ -89,6 +89,13 @@ const Sidebar = ({ closeSidebar }) => {
             >
                 <AiOutlineGift className={`${location.pathname === "/subscriptions" ? "text-white" : "text-GREY-400"} w-5 h-5  group-hover:text-white`} />
                 <p className={`${location.pathname === "/subscriptions" ? "text-white" : "text-GREY-400"} font-jost text-sm group-hover:text-white`}>Subscriptions</p>
+            </div>
+            <div 
+                className={`${location.pathname === "/one-time-payment" ? "bg-ORANGE-100" : "bg-white"} flex items-center px-4 py-2.5 gap-[5px] shadow w-[260px] cursor-pointer group hover:bg-ORANGE-100 rounded-[6px]`}
+                onClick={() => navigate("/one-time-payment")}
+            >
+                <AiOutlineGift className={`${location.pathname === "/one-time-payment" ? "text-white" : "text-GREY-400"} w-5 h-5  group-hover:text-white`} />
+                <p className={`${location.pathname === "/one-time-payment" ? "text-white" : "text-GREY-400"} font-jost text-sm group-hover:text-white`}>On Time Payment</p>
             </div>
             <div 
                 className={`${location.pathname === "/pricing-settings" ? "bg-ORANGE-100" : "bg-white"} flex items-center px-4 py-2.5 gap-[5px] shadow w-[260px] cursor-pointer group hover:bg-ORANGE-100 rounded-[6px]`}

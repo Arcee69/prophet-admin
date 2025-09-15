@@ -11,16 +11,16 @@ import SideModal from '../../components/sideModal'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { BiExport } from 'react-icons/bi'
-import SubscriptionDetails from './components/SubscriptionDetails'
-import { fetchSubscriptions } from '../../features/subscriptions/getSubscriptionSlice'
+import { fetchOneTimePayment } from '../../features/oneTimePayment/getOneTimePaymentSlice'
+import OneTimePaymentDetails from './components/OneTimePaymentDetails'
 
 
 
-const Subscriptions = () => {
+const OneTimePayment = () => {
   const [search, setSearch] = useState("")
   const [status, setStatus] = useState("")
   const [category, setCategory] = useState("")
-  const [subscriptionData, setSubscriptionData] = useState([])
+  const [OneTimePaymentData, setOnDemandData] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [openAddNewModal, setOpenAddNewModal] = useState(false)
   const [openDetailsModal, setOpenDetailsModal] = useState(false)
@@ -34,17 +34,17 @@ const Subscriptions = () => {
   // }, [dispatch, currentPage])
 
   useEffect(() => {
-    dispatch(fetchSubscriptions(currentPage))
+    dispatch(fetchOneTimePayment(currentPage))
   }, [dispatch, currentPage])
 
 
 
-  const {subscriptions, loading, pagination } = useSelector((state) => state.allSubscriptions)
-  console.log(subscriptions, "subscriptions")
+  const {oneTimePayment, loading, pagination } = useSelector((state) => state.allOneTimePayment)
+  console.log(oneTimePayment, "oneTimePayment")
 
 
   // Filter users based on search, status, and category
-  const filteredTransactions = subscriptions.data?.filter(sub =>
+  const filteredTransactions = oneTimePayment.data?.filter(sub =>
     sub.user_id.toLowerCase().includes(search.toLowerCase()) &&
     (status === "" || sub.is_active === status) &&
     (category === "" || category === "All")
@@ -70,18 +70,18 @@ const Subscriptions = () => {
 
 
   const exportExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(subscriptions.data);
+    const worksheet = XLSX.utils.json_to_sheet(oneTimePayment.data);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Subscriptions');
-    XLSX.writeFile(workbook, `subscriptions_${Date.now()}.xlsx`);
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'OneTimePayment');
+    XLSX.writeFile(workbook, `OneTimePayment_${Date.now()}.xlsx`);
   };
 
   return (
     <div className='flex flex-col gap-[57px]'>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col gap-2'>
-          <p className='text-DARK-300 text-[30px] font-jost leading-[38px] font-semibold'>Subscriptions</p>
-          <p className='text-GREY-500 font-jost text-base leading-6'>Manage Subscriptions here</p>
+          <p className='text-DARK-300 text-[30px] font-jost leading-[38px] font-semibold'>One Time Payment</p>
+          <p className='text-GREY-500 font-jost text-base leading-6'>Manage One Time Payment here</p>
         </div>
         <button
           type='button'
@@ -96,7 +96,7 @@ const Subscriptions = () => {
       <div className='w-full bg-white rounded-[15px] py-[30px] px-6 flex flex-col gap-[15px]'>
         <div className='bg-GREY-50 p-5 rounded-lg flex items-center gap-3'>
           <div className='flex flex-col gap-1.5'>
-            <p className='text-GREY-300 font-jost text-sm '>Search for Subscriptions</p>
+            <p className='text-GREY-300 font-jost text-sm '>Search for Payment</p>
             <div className='w-[586px] lg:flex items-center border border-[#E4E7EC] bg-[#fff] rounded-lg h-[36px]'>
               <div className='bg-[#fff] h-full rounded-tl-lg rounded-bl-lg flex items-center p-2'>
                 <IoSearch className='w-4 h-4 text-[#00000066]' />
@@ -110,7 +110,7 @@ const Subscriptions = () => {
               />
             </div>
           </div>
-          <div className='flex flex-col gap-1.5'>
+          {/* <div className='flex flex-col gap-1.5'>
             <p className='text-GREY-300 font-jost text-sm'>Status</p>
             <div className='w-[192px] lg:flex justify-between items-center border p-2 border-[#E4E7EC] bg-[#fff] rounded-lg h-[36px]'>
               <select
@@ -124,7 +124,7 @@ const Subscriptions = () => {
               </select>
               <IoIosArrowDown className='w-4 h-4 text-GREY-200' />
             </div>
-          </div>
+          </div> */}
           <div className='flex flex-col gap-1.5'>
             <p className='text-GREY-300 font-jost text-sm'>Types</p>
             <div className='w-[192px] lg:flex justify-between items-center border p-2 border-[#E4E7EC] bg-[#fff] rounded-lg h-[36px]'>
@@ -148,10 +148,10 @@ const Subscriptions = () => {
               <tr className='bg-NEUTRAL-200'>
                 <th className='p-4 text-left'><input type='checkbox' /></th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>User ID + Email</th>
-                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Subscription Plan</th>
+                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Plan</th>
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Amount Paid</th>
-                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Start Date</th>
-                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>End Date</th>
+                {/* <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Start Date</th>
+                <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>End Date</th> */}
                 <th className='p-4 text-left text-sm font-jost font-semibold text-DARK-500'>Status</th>
                 <th className='p-4 text-left text-sm font-jost text-DARK-500'></th>
               </tr>
@@ -174,8 +174,8 @@ const Subscriptions = () => {
                   </td>
                   <td className='p-4 text-sm font-jost text-DARK-500'>{sub.subscription_plan.name}</td>
                   <td className='p-4 text-sm font-jost text-DARK-500'>{sub.type === 'monthly' ? sub.subscription_plan.monthly_amount : sub.subscription_plan.annual_amount}</td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{sub.start_date}</td>
-                  <td className='p-4 text-sm font-jost text-DARK-500'>{sub.end_date}</td>
+                  {/* <td className='p-4 text-sm font-jost text-DARK-500'>{sub.start_date}</td>
+                  <td className='p-4 text-sm font-jost text-DARK-500'>{sub.end_date}</td> */}
                   <td className='p-4'>
                     <span className={`${sub.is_active ? "bg-GREEN-50 text-GREEN-700" : "bg-red-100 text-red-500 "} text-xs font-medium px-2.5 py-2 rounded-lg`}>{sub.status  ? "Active" : "Expired"}</span>
                   </td>
@@ -192,7 +192,7 @@ const Subscriptions = () => {
                           <button
                             onClick={() => {
                               setOpenDetailsModal(true);
-                              setSubscriptionData(sub);
+                              setOnDemandData(sub);
                               setOpenMenuIndex(null);
                             }}
                             className='font-jost text-green-400'
@@ -207,7 +207,7 @@ const Subscriptions = () => {
               )) : (
                 <tr>
                   <td colSpan="7" className='p-4 text-center text-GREY-200 font-jost'>
-                    No Subscription Found
+                    No Record Found
                   </td>
                 </tr>
               )}
@@ -239,7 +239,7 @@ const Subscriptions = () => {
       </div>
 
       <SideModal isOpen={openDetailsModal} onClose={() => setOpenDetailsModal(false)} width={"md:w-[546px]"}>
-        <SubscriptionDetails handleClose={() => setOpenDetailsModal(false)}   subscriptionData={subscriptionData} />
+        <OneTimePaymentDetails handleClose={() => setOpenDetailsModal(false)}   OneTimePaymentData={OneTimePaymentData} />
       </SideModal>
 
 
@@ -247,4 +247,4 @@ const Subscriptions = () => {
   )
 }
 
-export default Subscriptions
+export default OneTimePayment

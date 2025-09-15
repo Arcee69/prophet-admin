@@ -24,5 +24,6 @@ export const appUrls = {
 
     //SUBSCRIPTION ENDPOINT
     SUBSCRIPTION_SETTINGS_URL: "/v1/subscription-plans",
-    SUBSCRIPTION_URL: "/v1/subscriptions"
+    SUBSCRIPTION_URL: "/v1/subscriptions",
+    ONETIMEPAYMENT_URL: "/v1/on-demand-payments"
 };
