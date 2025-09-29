@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 //Svgs
 import ArrowUp from "../../assets/svg/arrow_up.svg"
@@ -12,53 +12,68 @@ import { useNavigate } from 'react-router-dom'
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { MdOutlineTrendingUp } from 'react-icons/md'
 import { GoStop } from 'react-icons/go'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchStats } from '../../features/dashboard/getStatsCardSlice'
+import { api } from '../../services/api'
+import { appUrls } from '../../services/urls'
 
 
 const Dashboard = () => {
-  const [selectedYear, setSelectedYear] = useState("Last 30 days")
+  const [selectedYear, setSelectedYear] = useState("2025")
+  const [transactionTrend, setTransactionTrend] = useState([])
+  const [subDistribution, setSubDistribution] = useState([])
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { stats } = useSelector((state) => state.allStats)
+  console.log(stats, "stats")
+
+  const getTransactionTrends = async () => {
+    try {
+      const res = await api.get(appUrls?.STATS_URL + `/transaction-trend?year=${selectedYear}`)
+      setTransactionTrend(res?.data?.data)
+      console.log(res, "there")
+    } catch (err) {
+      console.log(err, "err")
+    }
+  }
+
+  const getSubDistribution = async () => {
+    try {
+      const res = await api.get(appUrls?.STATS_URL + `/subscription-distribution`)
+      setSubDistribution(res?.data?.data)
+      console.log(res, "feel")
+    } catch (err) {
+      console.log(err, "err")
+    }
+  }
+
+  useEffect(() => {
+    getSubDistribution(),
+    getTransactionTrends()
+  }, [])
 
   // Bar Chart Data
-  const channelData = [
-      { name: 'Monthly', subscription: 1200 },
-      { name: 'Quarterly', subscription: 800 },
-      { name: 'Annual', subscription: 600},
-      { name: 'Enterprise', subscription: 400 },
-  ];
+  const formattedSubData = subDistribution?.map(item => ({
+    name: item.subscription_plan.name,  // "Prophet Lite"
+    subscription: Number(item.total)    // convert "1" → 1
+  }))
 
-  const data = [
-  {
-    name: 'Jan',
-    Transactions: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Feb',
-    Transactions: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Mar',
-    Transactions: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Apr',
-    Transactions: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'May',
-    Transactions: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'Jun',
-    Transactions: 3800,
-    amt: 2500,
-  },
-];
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ]
+
+  const formattedTransactionData = transactionTrend?.map(item => ({
+    name: months[item.month - 1],
+    total: item.total
+  }))
+
+  useEffect(() => {
+    dispatch(fetchStats())
+  }, [])
+
 
   return (
     <div className='flex flex-col gap-[57px]'>
@@ -75,22 +90,22 @@ const Dashboard = () => {
             <div className='flex items-center justify-between'>
               <img src={ArrowUp} alt='ArrowUp' className='w-6 h-6' />
               <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  className='font-jost text-[#98A2B3]  text-xs cursor-pointer bg-transparent border-none outline-none'
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                className='font-jost text-[#98A2B3] invisible text-xs cursor-pointer bg-transparent border-none outline-none'
               >
-                  {["Last 30 days", "Last 7 days"].map(year => (
-                      <option key={year} value={year}>{year}</option>
-                  ))}
+                {["Last 30 days", "Last 7 days"].map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
               </select>
             </div>
             <div className='flex flex-col gap-2'>
               <p className='text-[#667185] font-jost text-sm'>Today Brands</p>
               <div className='flex items-center gap-[14px]'>
-                <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>247</h3>
-                <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
+                <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>{stats?.data?.brands}</h3>
+                {/* <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
                   <p className='text-[#036B26] font-inter text-xs font-medium'>+1.3%</p>
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -100,22 +115,22 @@ const Dashboard = () => {
             <div className='flex items-center justify-between'>
               <img src={Chat} alt='Chat' className='w-6 h-6' />
               <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  className='font-jost text-[#98A2B3]  text-xs cursor-pointer bg-transparent border-none outline-none'
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                className='font-jost text-[#98A2B3] invisible text-xs cursor-pointer bg-transparent border-none outline-none'
               >
-                  {["Last 30 days", "Last 7 days"].map(year => (
-                      <option key={year} value={year}>{year}</option>
-                  ))}
+                {["Last 30 days", "Last 7 days"].map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
               </select>
             </div>
             <div className='flex flex-col gap-2'>
               <p className='text-[#667185] font-jost text-sm'>Registered Users</p>
               <div className='flex items-center gap-[14px]'>
-                <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>3,024</h3>
-                <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
+                <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>{stats?.data?.users}</h3>
+                {/* <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
                   <p className='text-[#036B26] font-inter text-xs font-medium'>+8%</p>
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -125,46 +140,46 @@ const Dashboard = () => {
             <div className='flex items-center justify-between'>
               <img src={Pie} alt='Pie' className='w-6 h-6' />
               <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  className='font-jost text-[#98A2B3]  text-xs cursor-pointer bg-transparent border-none outline-none'
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                className='font-jost text-[#98A2B3] invisible text-xs cursor-pointer bg-transparent border-none outline-none'
               >
-                  {["Last 30 days", "Last 7 days"].map(year => (
-                      <option key={year} value={year}>{year}</option>
-                  ))}
+                {["Last 30 days", "Last 7 days"].map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
               </select>
             </div>
             <div className='flex flex-col gap-2'>
               <p className='text-[#667185] font-jost text-sm'>Active Subscriptions</p>
               <div className='flex items-center gap-[14px]'>
-                <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>2,546</h3>
-                <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
+                <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>{stats?.data?.users}</h3>
+                {/* <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
                   <p className='text-[#036B26] font-inter text-xs font-medium'>+2%</p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
 
-        <div className='bg-white rounded-[18px] p-4 w-3/12 shadow-sm flex flex-col gap-[45px]'>
+          <div className='bg-white rounded-[18px] p-4 w-3/12 shadow-sm flex flex-col gap-[45px]'>
             <div className='flex items-center justify-between'>
               <img src={Alert} alt='Alert' className='w-6 h-6' />
               <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  className='font-jost text-[#98A2B3]  text-xs cursor-pointer bg-transparent border-none outline-none'
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                className='font-jost text-[#98A2B3] invisible text-xs cursor-pointer bg-transparent border-none outline-none'
               >
-                  {["Last 30 days", "Last 7 days"].map(year => (
-                      <option key={year} value={year}>{year}</option>
-                  ))}
+                {["Last 30 days", "Last 7 days"].map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
               </select>
             </div>
             <div className='flex flex-col gap-2'>
               <p className='text-[#667185] font-jost text-sm'>Monthly Revenue</p>
               <div className='flex items-center gap-[14px]'>
-                <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>$65,000</h3>
-                <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
+                <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>${stats?.data?.averageMonthlyRevenue}</h3>
+                {/* <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
                   <p className='text-[#036B26] font-inter text-xs font-medium'>+2%</p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -173,39 +188,58 @@ const Dashboard = () => {
 
         <div className='flex items-start gap-5'>
           <div className='bg-white h-[350px] flex flex-col gap-5 w-full rounded-3xl p-5'>
-            <div className='flex items-center gap-4'>
-              <MdOutlineTrendingUp className='w-5 h-5 text-[#E78020]'/>
-              <p className='font-jost font-semibold text-[#6B7280] text-[18px] leading-6'>Transactions Trend</p>
+            <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-4'>
+                <MdOutlineTrendingUp className='w-5 h-5 text-[#E78020]' />
+                <p className='font-jost font-semibold text-[#6B7280] text-[18px] leading-6'>
+                  Transactions Trend
+                </p>
+              </div>
+              <select
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                className='font-jost text-[#98A2B3] text-xs cursor-pointer bg-transparent border-none outline-none'
+              >
+                {["2025", "2026", "2027", "2028", "2029", "2030"].map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
             </div>
+
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
-                width={500}
-                height={300}
-                data={data}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
+                data={formattedTransactionData}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="Transactions" stroke="#E78020" activeDot={{ r: 8 }} />
+                <Line
+                  type="monotone"
+                  dataKey="total"
+                  stroke="#E78020"
+                  activeDot={{ r: 8 }}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
 
           <div className="w-full h-[350px] bg-white flex flex-col gap-5 rounded-3xl p-5">
             <div className='flex items-center gap-4'>
-              <LuCreditCard className='w-5 h-5 text-[#E78020]'/>
-              <p className='font-jost font-semibold text-[#6B7280] text-[18px] leading-6'>Subscription Distribution</p>
+              <LuCreditCard className='w-5 h-5 text-[#E78020]' />
+              <p className='font-jost font-semibold text-[#6B7280] text-[18px] leading-6'>
+                Subscription Distribution
+              </p>
             </div>
+
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={channelData} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
+              <BarChart
+                data={formattedSubData}
+                margin={{ top: 20, right: 20, left: 0, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
@@ -214,6 +248,7 @@ const Dashboard = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
+
         </div>
 
         <div className='flex items-start gap-5'>
@@ -257,7 +292,7 @@ const Dashboard = () => {
               ))}
             </div>
           </div>
-          
+
           <div className='py-[29px] bg-white rounded-3xl w-full px-[25px] h-[350px] flex flex-col gap-[28px]'>
             <p className='font-jost font-semibold text-[18px]  text-[#6B7280]'>
               Quick Actions
@@ -269,12 +304,6 @@ const Dashboard = () => {
                 <button onClick={() => navigate("/brand-management")} className="flex items-center gap-4 text-sm text-[#000] font-jost border border-[#E5E7EB] px-4 py-2 rounded-[10px] bg-[#F8FAFC]">
                   <FiPlus /> Add Brand
                 </button>
-                {/* <button className="flex items-center gap-4 text-sm text-[#000] font-jost border border-[#E5E7EB] px-4 py-2 rounded-[10px] bg-[#F8FAFC]">
-                  <LuClipboardList /> Compare Brands
-                </button>
-                <button className="flex items-center gap-4 text-sm text-[#000] font-jost border border-[#E5E7EB] px-4 py-2 rounded-[10px] bg-[#F8FAFC]">
-                  <FiThumbsUp /> Brand Health Check
-                </button> */}
               </div>
             </div>
           </div>
@@ -293,7 +322,7 @@ const Dashboard = () => {
             <GoStop className='w-5 h-5 text-[#E78020]' />
             <p className='font-jost font-semibold text-[#6B7280] text-[18px] leading-6'>Pending Brand Requests</p>
           </div>
-          
+
           <div className="flex flex-col">
             <div className="grid grid-cols-4 bg-[#F1F3F9] px-4 py-2 font-jost text-[#667185] text-sm">
               <p>Name</p>

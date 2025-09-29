@@ -13,6 +13,9 @@ export const appUrls = {
     //BRANDS ENDPOINTS
     BRANDS_URL: "/v1/brand",
 
+    //DASHBOARD STAT ENDPOINTS
+    STATS_URL: "/v1/analytics/admin",
+
     //BLOGS ENDPOINT
     BLOGS_URL: "/v1/post",
    
