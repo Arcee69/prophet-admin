@@ -16,12 +16,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchStats } from '../../features/dashboard/getStatsCardSlice'
 import { api } from '../../services/api'
 import { appUrls } from '../../services/urls'
+import { toast } from 'react-toastify'
+import { CgSpinner } from 'react-icons/cg'
 
 
 const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState("2025")
   const [transactionTrend, setTransactionTrend] = useState([])
   const [subDistribution, setSubDistribution] = useState([])
+  const [brandRequestData, setBrandRequestData] = useState([])
+  const [acceptBrandRequestLoading, setAcceptBrandRequestLoading] = useState(false)
+  const [rejectBrandRequestLoading, setRejectBrandRequestLoading] = useState(false)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -49,9 +54,20 @@ const Dashboard = () => {
     }
   }
 
+  const getBrandRequest = async () => {
+    try {
+      const res = await api.get(appUrls?.BRANDS_REQUEST_URL)
+      setBrandRequestData(res?.data?.data)
+      console.log(res, "feel")
+    } catch (err) {
+      console.log(err, "err")
+    }
+  }
+
   useEffect(() => {
     getSubDistribution(),
-    getTransactionTrends()
+    getTransactionTrends(),
+    getBrandRequest()
   }, [])
 
   // Bar Chart Data
@@ -74,6 +90,39 @@ const Dashboard = () => {
     dispatch(fetchStats())
   }, [])
 
+  console.log(brandRequestData, "brandRequestData")
+
+ const acceptBrandRequest = async (id) => {
+    setAcceptBrandRequestLoading(true)
+    try {
+      const res = await api.patch(appUrls?.BRANDS_REQUEST_URL + `/accept/${id}`)
+      toast.success("Brand Accepted Successfully")
+      getBrandRequest()
+      console.log(res, "feel")
+    } catch (err) {
+      toast.error(err?.data?.message || "An error occurred")
+      console.log(err, "err")
+    } finally {
+      setAcceptBrandRequestLoading(false)
+    }
+  }
+
+  const rejectBrandRequest = async (id) => {
+    setRejectBrandRequestLoading(true)
+    try {
+      const res = await api.patch(appUrls?.BRANDS_REQUEST_URL + `/reject/${id}`)
+      toast.success("Brand Rejected Successfully")
+      getBrandRequest()
+      console.log(res, "feel")
+    } catch (err) {
+      toast.error(err?.data?.message || "An error occurred")
+      console.log(err, "err")
+    } finally {
+      setRejectBrandRequestLoading(false)
+    }
+  }
+
+  const pendingBrandRequest = brandRequestData?.filter(item => item.status === "pending")
 
   return (
     <div className='flex flex-col gap-[57px]'>
@@ -103,9 +152,6 @@ const Dashboard = () => {
               <p className='text-[#667185] font-jost text-sm'>Today Brands</p>
               <div className='flex items-center gap-[14px]'>
                 <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>{stats?.data?.brands}</h3>
-                {/* <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
-                  <p className='text-[#036B26] font-inter text-xs font-medium'>+1.3%</p>
-                </div> */}
               </div>
             </div>
 
@@ -128,9 +174,6 @@ const Dashboard = () => {
               <p className='text-[#667185] font-jost text-sm'>Registered Users</p>
               <div className='flex items-center gap-[14px]'>
                 <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>{stats?.data?.users}</h3>
-                {/* <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
-                  <p className='text-[#036B26] font-inter text-xs font-medium'>+8%</p>
-                </div> */}
               </div>
             </div>
 
@@ -153,9 +196,6 @@ const Dashboard = () => {
               <p className='text-[#667185] font-jost text-sm'>Active Subscriptions</p>
               <div className='flex items-center gap-[14px]'>
                 <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>{stats?.data?.users}</h3>
-                {/* <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
-                  <p className='text-[#036B26] font-inter text-xs font-medium'>+2%</p>
-                </div> */}
               </div>
             </div>
           </div>
@@ -177,9 +217,6 @@ const Dashboard = () => {
               <p className='text-[#667185] font-jost text-sm'>Monthly Revenue</p>
               <div className='flex items-center gap-[14px]'>
                 <h3 className='text-[#101928] font-inter text-[18px]  font-semibold'>${stats?.data?.averageMonthlyRevenue}</h3>
-                {/* <div className='bg-[#E7F6EC] w-[40px] h-[17px] rounded-lg items-center flex justify-center p-2'>
-                  <p className='text-[#036B26] font-inter text-xs font-medium'>+2%</p>
-                </div> */}
               </div>
             </div>
           </div>
@@ -251,7 +288,7 @@ const Dashboard = () => {
 
         </div>
 
-        <div className='flex items-start gap-5'>
+        <div className=' items-start hidden gap-5'>
           <div className='py-[29px] bg-white rounded-3xl  w-full px-[25px] h-[350px] flex flex-col gap-[28px]'>
             <p className="text-[#6B7280] text-[18px] font-jost font-semibold">Recent Alerts</p>
             <div className="flex flex-col gap-4">
@@ -309,14 +346,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* <div className='bg-white rounded-3xl flex flex-col gap-6 w-full p-5'>
-          <div className='flex items-center gap-4'>
-            <GoStop className='w-5 h-5 text-[#E78020]' />
-            <p className='font-jost font-semibold text-[#6B7280] text-[18px] leading-6'>Pending Brand Requests</p>
-          </div>
-          
-        </div> */}
-
         <div className='bg-white rounded-3xl flex flex-col gap-6 w-full p-5'>
           <div className='flex items-center gap-4'>
             <GoStop className='w-5 h-5 text-[#E78020]' />
@@ -330,58 +359,33 @@ const Dashboard = () => {
               <p>Date Created</p>
               <p></p>
             </div>
-            <div className="grid grid-cols-4 px-4 py-3 border-b border-gray-200 items-center">
-              <p className="text-[#101928] font-jost text-sm">Cocacola</p>
-              <p className="text-[#101928] font-jost text-sm">Admin</p>
-              <p className="text-[#101928] font-jost text-sm">21/12/2022</p>
-              <div className="flex gap-2">
-                <button className="bg-green-100 text-green-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
-                  ✓ Accept
-                </button>
-                <button className="bg-red-100 text-red-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
-                  ✕ Reject
-                </button>
+            {pendingBrandRequest?.length > 0 ? pendingBrandRequest?.map((item) => (
+              <div key={item.id} className="grid grid-cols-4 px-4 py-3 border-b border-gray-200 items-center">
+                <p className="text-[#101928] font-jost capitalize text-sm">{item.name}</p>
+                <p className="text-[#101928] font-jost capitalize text-sm">{item.user.name}</p>
+                <p className="text-[#101928] font-jost text-sm">{new Date(item.created_at).toLocaleDateString()}</p>
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => acceptBrandRequest(item.id)} 
+                    disabled={acceptBrandRequestLoading}
+                    className="bg-green-100 text-green-600 px-3 py-1 rounded-md flex items-center justify-center gap-1 font-jost text-sm"
+                  >
+                    ✓ {acceptBrandRequestLoading ? <CgSpinner className='animate-spin text-lg' /> : 'Accept'}
+                  </button>
+                  <button 
+                    onClick={() => rejectBrandRequest(item.id)} 
+                    disabled={rejectBrandRequestLoading}
+                    className="bg-red-100 text-red-600 px-3 py-1 rounded-md flex items-center justify-center gap-1 font-jost text-sm"
+                  >
+                    ✕ {rejectBrandRequestLoading ? <CgSpinner className='animate-spin text-lg' /> : 'Reject'}
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="grid grid-cols-4 px-4 py-3 border-b border-gray-200 items-center">
-              <p className="text-[#101928] font-jost text-sm">Samsung PLC</p>
-              <p className="text-[#101928] font-jost text-sm">System</p>
-              <p className="text-[#101928] font-jost text-sm">21/12/2022</p>
-              <div className="flex gap-2">
-                <button className="bg-green-100 text-green-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
-                  ✓ Accept
-                </button>
-                <button className="bg-red-100 text-red-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
-                  ✕ Reject
-                </button>
+            )) : 
+              <div className='flex items-center mt-5 justify-center'>
+                  <p className='text-[#101928] font-jost text-sm font-medium'>No Pending Brand Requests</p>
               </div>
-            </div>
-            <div className="grid grid-cols-4 px-4 py-3 border-b border-gray-200 items-center">
-              <p className="text-[#101928] font-jost text-sm">Samsung PLC</p>
-              <p className="text-[#101928] font-jost text-sm">Super Admin</p>
-              <p className="text-[#101928] font-jost text-sm">21/12/2022</p>
-              <div className="flex gap-2">
-                <button className="bg-green-100 text-green-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
-                  ✓ Accept
-                </button>
-                <button className="bg-red-100 text-red-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
-                  ✕ Reject
-                </button>
-              </div>
-            </div>
-            <div className="grid grid-cols-4 px-4 py-3 items-center">
-              <p className="text-[#101928] font-jost text-sm">Samsung PLC</p>
-              <p className="text-[#101928] font-jost text-sm">Text</p>
-              <p className="text-[#101928] font-jost text-sm">21/12/2022</p>
-              <div className="flex gap-2">
-                <button className="bg-green-100 text-green-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
-                  ✓ Accept
-                </button>
-                <button className="bg-red-100 text-red-600 px-3 py-1 rounded-md flex items-center gap-1 font-jost text-sm">
-                  ✕ Reject
-                </button>
-              </div>
-            </div>
+            }
           </div>
 
         </div>
