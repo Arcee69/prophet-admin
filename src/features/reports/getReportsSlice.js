@@ -38,6 +38,8 @@ const getReportsSlice = createSlice({
             nextPageUrl: action.payload.pagination?.next_page_url,
             prevPageUrl: action.payload.pagination?.prev_page_url,
             total: action.payload.pagination?.total,
+            perPage: action.payload.pagination?.per_page,
+            totalPages: Math.ceil(action.payload.pagination?.total / action.payload.pagination?.per_page)
           };
         })
         .addCase(fetchReports.rejected, (state, action) => {
