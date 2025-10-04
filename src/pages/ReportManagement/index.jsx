@@ -46,35 +46,95 @@ const ReportManagement = () => {
 
 
 
+    // const uploadReport = async (id, file) => {
+    //     if (!file) {
+    //         toast.error("Please select a file first");
+    //         return;
+    //     }
+
+    //     setActionLoading({ type: 'upload', id });
+    //     const formData = new FormData();
+    //     formData.append('file', file);
+
+    //     try {
+    //         const res = await axios.post(`${URL}/v1/reports/upload-report/${id}`, formData, {
+    //             headers: {
+    //                 "Authorization": `Bearer ${token}`,
+    //                 "Content-Type": "multipart/form-data"
+    //             }
+    //         });
+
+    //         toast.success(res.data.message || "File uploaded successfully");
+    //         dispatch(fetchReports({ page: currentPage }));
+    //     } catch (err) {
+    //         console.log(err, "err");
+    //         const errorMessage = err.data?.message || "Failed to upload report";
+    //         toast.error(errorMessage);
+    //     } finally {
+    //         setActionLoading({ type: null, id: null });
+    //         setFileReport(null);
+    //     }
+    // };
+
+
     const uploadReport = async (id, file) => {
         if (!file) {
             toast.error("Please select a file first");
             return;
         }
 
+        // Start loading indicator
         setActionLoading({ type: 'upload', id });
         const formData = new FormData();
         formData.append('file', file);
+
+        // Show persistent loading toast
+        const toastId = toast.loading("Uploading report...");
 
         try {
             const res = await axios.post(`${URL}/v1/reports/upload-report/${id}`, formData, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "multipart/form-data"
-                }
+                },
+                onUploadProgress: (progressEvent) => {
+                    const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    toast.update(toastId, { render: `Uploading report... ${percent}%`, isLoading: true });
+                },
             });
 
-            toast.success(res.data.message || "File uploaded successfully");
+            // Success
+            toast.update(toastId, {
+                render: res.data.message || "File uploaded successfully ✅",
+                type: "success",
+                isLoading: false,
+                autoClose: 2000,
+            });
+
             dispatch(fetchReports({ page: currentPage }));
+
+            // Auto-close menu or modal
+            setOpenMenuIndex(null);
         } catch (err) {
-            console.log(err, "err");
-            const errorMessage = err.data?.message || "Failed to upload report";
-            toast.error(errorMessage);
+            console.error(err);
+            const errorMessage = err.response?.data?.message || "Failed to upload report";
+            toast.update(toastId, {
+                render: errorMessage,
+                type: "error",
+                isLoading: false,
+                autoClose: 3000,
+            });
         } finally {
             setActionLoading({ type: null, id: null });
             setFileReport(null);
+
+            // Reset file input (so user can upload same file again)
+            if (fileInputRef.current) {
+                fileInputRef.current.value = '';
+            }
         }
     };
+
 
 
     const updateStatusToDone = async (id) => {
@@ -263,9 +323,6 @@ const ReportManagement = () => {
                                             {item.subject}
                                         </td>
                                         <td className='p-4 text-sm capitalize font-jost text-DARK-500'>{item.report_type}</td>
-                                        {/* <td className='p-4 text-sm font-jost text-DARK-500 max-w-[250px] truncate' title={item.request}>
-                                            {item.request || "Not Available"}
-                                        </td> */}
                                         <td className='p-4 text-sm font-jost text-DARK-500'>{item.region}</td>
                                         <td className='p-4 font-jost text-DARK-500'>
                                             <span className={`inline-flex px-2 py-1 text-sm capitalize font-jost rounded-full ${bgColor} ${textColor}`}>
@@ -298,7 +355,14 @@ const ReportManagement = () => {
                                                             onClick={() => handleUploadClick(item.id)}
                                                             disabled={isUploading}
                                                         >
-                                                            {isUploading ? "Uploading..." : "Upload Report"}
+                                                            {/* {isUploading ? "Uploading..." : "Upload Report"} */}
+                                                            {isUploading ? (
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className="animate-spin border-2 border-t-transparent border-blue-500 rounded-full w-4 h-4"></span>
+                                                                    Uploading...
+                                                                </div>
+                                                                ) : "Upload Report"}
+
                                                         </button>
                                                         <button
                                                             onClick={() => {
@@ -365,8 +429,8 @@ const ReportManagement = () => {
 
             {/* Mark as Done Confirmation Modal */}
             {openMarkDoneModal && selectedReport && (
-                <div 
-                    className="fixed inset-0 bg-transparent flex items-center justify-center z-50 p-4" 
+                <div
+                    className="fixed inset-0 bg-transparent flex items-center justify-center z-50 p-4"
                     style={{ opacity: 1 }}
                 >
                     <div className="bg-white shadow rounded-lg p-6 max-w-md w-full">
