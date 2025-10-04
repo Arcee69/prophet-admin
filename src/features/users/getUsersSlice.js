@@ -34,10 +34,10 @@ const getUsersSlice = createSlice({
           state.loading = false;
           state.users = action.payload;
           state.pagination = {
-            currentPage: action.payload.current_page,
-            nextPageUrl: action.payload.next_page_url,
-            prevPageUrl: action.payload.prev_page_url,
-            total: action.payload.total,
+            currentPage: action.payload.pagination?.current_page,
+            nextPageUrl: action.payload.pagination?.next_page_url,
+            prevPageUrl: action.payload.pagination?.prev_page_url,
+            total: action.payload.pagination?.total,
           };
         })
         .addCase(fetchUsers.rejected, (state, action) => {

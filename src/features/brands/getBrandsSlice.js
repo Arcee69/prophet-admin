@@ -19,6 +19,7 @@ const getBrandsSlice = createSlice({
     name: 'brands',
     initialState: {
       brands: [],
+      pagination: null,
       loading: false,
       error: null
     },
@@ -32,6 +33,12 @@ const getBrandsSlice = createSlice({
         .addCase(fetchBrands.fulfilled, (state, action) => {
           state.loading = false;
           state.brands = action.payload;
+          state.pagination = {
+            currentPage: action.payload.pagination?.current_page,
+            nextPageUrl: action.payload.pagination?.next_page_url,
+            prevPageUrl: action.payload.pagination?.prev_page_url,
+            total: action.payload.pagination?.total,
+          };
         })
         .addCase(fetchBrands.rejected, (state, action) => {
           state.loading = false;

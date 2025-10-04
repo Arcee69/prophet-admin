@@ -26,6 +26,9 @@ export const appUrls = {
     // FAQ ENDPOINT
     FAQ_URL: "/v1/faq",
 
+    //REPORTS ENDPOINT
+    REPORTS_URL: "/v1/reports",
+
     //SUBSCRIPTION ENDPOINT
     SUBSCRIPTION_SETTINGS_URL: "/v1/subscription-plans",
     SUBSCRIPTION_URL: "/v1/subscriptions",

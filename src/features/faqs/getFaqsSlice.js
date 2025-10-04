@@ -33,11 +33,11 @@ const getFaqsSlice = createSlice({
         .addCase(fetchFaqs.fulfilled, (state, action) => {
           state.loading = false;
           state.faqs = action.payload;
-          state.pagination = {
-            currentPage: action.payload.current_page,
-            nextPageUrl: action.payload.next_page_url,
-            prevPageUrl: action.payload.prev_page_url,
-            total: action.payload.total,
+           state.pagination = {
+            currentPage: action.payload.pagination?.current_page,
+            nextPageUrl: action.payload.pagination?.next_page_url,
+            prevPageUrl: action.payload.pagination?.prev_page_url,
+            total: action.payload.pagination?.total,
           };
         })
         .addCase(fetchFaqs.rejected, (state, action) => {

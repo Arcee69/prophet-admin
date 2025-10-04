@@ -3,11 +3,11 @@ import { api } from '../../services/api';
 import { appUrls } from '../../services/urls';
 
 
-export const fetchBlogs = createAsyncThunk(
-    'blogs/fetchBlogs',
-    async (page = 1, { rejectWithValue }) => {
+export const fetchReports = createAsyncThunk(
+    'reports/fetchReports',
+    async ({ page = 1 }, { rejectWithValue }) => {
       try {
-        const data = await api.get(appUrls?.BLOGS_URL)
+        const data = await api.get(`${appUrls?.REPORTS_URL}?page=${page}`)
         return data?.data;
       } catch (error) {
         return rejectWithValue(error);
@@ -15,10 +15,10 @@ export const fetchBlogs = createAsyncThunk(
     }
   );
 
-const getBlogsSlice = createSlice({
-    name: 'blogs',
+const getReportsSlice = createSlice({
+    name: 'reports',
     initialState: {
-      blogs: [],
+      reports: [],
       pagination: null,
       loading: false,
       error: null
@@ -26,13 +26,13 @@ const getBlogsSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
       builder
-        .addCase(fetchBlogs.pending, (state) => {
+        .addCase(fetchReports.pending, (state) => {
           state.loading = true;
           state.error = null;
         })
-        .addCase(fetchBlogs.fulfilled, (state, action) => {
+        .addCase(fetchReports.fulfilled, (state, action) => {
           state.loading = false;
-          state.blogs = action.payload;
+          state.reports = action.payload;
           state.pagination = {
             currentPage: action.payload.pagination?.current_page,
             nextPageUrl: action.payload.pagination?.next_page_url,
@@ -40,11 +40,11 @@ const getBlogsSlice = createSlice({
             total: action.payload.pagination?.total,
           };
         })
-        .addCase(fetchBlogs.rejected, (state, action) => {
+        .addCase(fetchReports.rejected, (state, action) => {
           state.loading = false;
           state.error = action.payload;
         });
     }
   });
   
-  export default getBlogsSlice.reducer;
+  export default getReportsSlice.reducer;

@@ -33,11 +33,11 @@ const getTransactionSlice = createSlice({
         .addCase(fetchTransactions.fulfilled, (state, action) => {
           state.loading = false;
           state.transactions = action.payload;
-          state.pagination = {
-            currentPage: action.payload.current_page,
-            nextPageUrl: action.payload.next_page_url,
-            prevPageUrl: action.payload.prev_page_url,
-            total: action.payload.total,
+           state.pagination = {
+            currentPage: action.payload.pagination?.current_page,
+            nextPageUrl: action.payload.pagination?.next_page_url,
+            prevPageUrl: action.payload.pagination?.prev_page_url,
+            total: action.payload.pagination?.total,
           };
         })
         .addCase(fetchTransactions.rejected, (state, action) => {

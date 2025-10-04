@@ -19,6 +19,7 @@ const getAdminsSlice = createSlice({
     name: 'admins',
     initialState: {
       admins: [],
+      pagination: null,
       loading: false,
       error: null
     },
@@ -32,6 +33,12 @@ const getAdminsSlice = createSlice({
         .addCase(fetchAdmins.fulfilled, (state, action) => {
           state.loading = false;
           state.admins = action.payload;
+          state.pagination = {
+            currentPage: action.payload.pagination?.current_page,
+            nextPageUrl: action.payload.pagination?.next_page_url,
+            prevPageUrl: action.payload.pagination?.prev_page_url,
+            total: action.payload.pagination?.total,
+          };
         })
         .addCase(fetchAdmins.rejected, (state, action) => {
           state.loading = false;
